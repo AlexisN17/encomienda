@@ -18,13 +18,16 @@ class EncomiendasController extends Controller
     {
 
           $encomienda = DB::table('encomiendas')
-          ->select('*')
-          ->join('ClientesRemitentes','ClientesRemitentes.id','=','encomiendas.id_clienteremitente')
-          ->join('ClientesDestinatario','ClientesDestinatario.id','=','encomiendas.id_clientedestinario')
+          ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+          ->join('clientesdestinatario','clientesdestinatario.id','=','encomiendas.id_clientedestinario')
+          ->select('encomiendas.*',
+                   'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente',
+                   'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
           ->where('estado_encomienda','=',false)
           ->get();
-          // dd($encomienda);
+
           return view('entrega',compact('encomienda'));
+
 
 
      }
