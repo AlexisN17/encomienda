@@ -1,0 +1,35 @@
+#cuerpo
+        {
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+#izquierda
+        {
+        padding: 0px;
+        margin: 0px;
+        width: 200px;
+        height: 100%;
+        background-color: blue;
+        float: left;
+    }
+#centro
+        {
+        padding: 0px;
+        margin: 0px;
+        width: 100px;
+        height: 100%;
+        background-color: white;   
+        float:left;
+    }
+#derecha
+        {
+        padding: 0px;
+        margin: 0px;
+        width: 200px;
+        height: 100%;
+        background-color: green;
+        float: right;
+    }

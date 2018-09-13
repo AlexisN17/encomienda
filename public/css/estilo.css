@@ -1,0 +1,66 @@
+* { margin: 0px;
+padding: 0px; outline: 0;
+}
+html, body { width: 100%;}
+
+body { background: white;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+img{
+display:block;
+margin:auto;
+float: right;
+
+}
+
+#headerrr{
+	background: white;
+	width: 820px;
+	height: 100px;
+	margin: 0px auto;
+	text-align: left;
+	padding: 10px;
+
+}
+#menu {  text-align: center;
+font-size: 0.7em;
+width: 840px;
+margin: auto auto;
+position: relative;
+
+}
+
+
+
+#derecha{
+    width: 260px;
+	height: auto;
+	margin: 0px auto;
+	padding: 10px;
+    float: left;
+}
+#medio{
+    width: 260px;
+	height: auto;
+	margin: 0px auto;
+	padding: 10px;
+    float: left;
+}
+#izquierda{
+    width: 260px;
+	height: auto;
+	margin: 0px auto;
+	padding: 10px;
+    float: left;
+}
+
+ #contenedorrr{
+	width: auto;
+	height: 100%;
+	margin-left: 256px;
+	margin-top: 31px;
+
+
+}
