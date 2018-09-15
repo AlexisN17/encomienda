@@ -85,10 +85,10 @@ class EnviosController extends Controller
           ]);
 
 
-         $cliente_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->get();
-
-         if (is_null($cliente_aux))
-         {
+         // $cliente_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->get();
+         //
+         // if (is_null($cliente_aux))
+         // {
           $origen = New ClienteRemitente;
           $origen -> nombre_clienter = $request -> nombre;
           $origen -> apellido_clienter = $request -> apellido;
@@ -96,11 +96,11 @@ class EnviosController extends Controller
           $origen -> telefono_clienter = $request -> telefono;
           $origen -> direccion_clienter = $request -> direccion;
           $origen -> save();
-          $id=$origen-> id;
-         }
-         else {
-            $id=$cliente_aux['id'];
-         }
+         //  $id=$origen-> id;
+         // }
+         // else {
+         //    $id=$cliente_aux['id'];
+         // }
 
         $destino = New ClienteDestinatario;
         $destino -> nombre_cliente = $request -> nombre2;
@@ -118,7 +118,7 @@ class EnviosController extends Controller
         $encomienda -> pago_encomienda = $request -> pago;
         $encomienda -> descripcion_encomienda = $request -> descripcion;
         $encomienda -> id_personal = Auth::user()->id;
-        $encomienda -> id_clienteremitente = $id;
+        $encomienda -> id_clienteremitente = $origen -> id;
         $encomienda -> id_clientedestinario = $destino -> id;
         $encomienda -> save();
 
