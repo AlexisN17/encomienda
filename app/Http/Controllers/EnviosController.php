@@ -9,6 +9,8 @@ use App\Encomienda;
 use App\Personal;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
+use DB;
+use App\Quotation;
 
 
 
@@ -89,40 +91,82 @@ class EnviosController extends Controller
          //
          // if (is_null($cliente_aux))
          // {
-          $origen = New ClienteRemitente;
-          $origen -> nombre_clienter = $request -> nombre;
-          $origen -> apellido_clienter = $request -> apellido;
-          $origen -> dni_clienter = $request -> dni;
-          $origen -> telefono_clienter = $request -> telefono;
-          $origen -> direccion_clienter = $request -> direccion;
-          $origen -> save();
-         //  $id=$origen-> id;
-         // }
-         // else {
-         //    $id=$cliente_aux['id'];
-         // }
+         $errorss = null;
+    DB::beginTransaction();
+    try {
 
-        $destino = New ClienteDestinatario;
-        $destino -> nombre_cliente = $request -> nombre2;
-        $destino -> apellido_cliente = $request -> apellido2;
-        $destino -> dni_cliente = $request -> dni2;
-        $destino -> telefono_cliente = $request -> telefono2;
-        $destino -> direccion_cliente = $request -> direccion2;
-        $destino -> save();
+      $origen = New ClienteRemitente;
+      $origen -> nombre_clienter = $request -> nombre;
+      $origen -> apellido_clienter = $request -> apellido;
+      $origen -> dni_clienter = $request -> dni;
+      $origen -> telefono_clienter = $request -> telefono;
+      $origen -> direccion_clienter = $request -> direccion;
+      $origen -> save();
 
 
-        $encomienda = New Encomienda;
-        $encomienda -> peso_encomienda = $request -> peso;
-        $encomienda -> tamaño_encomienda = $request -> tamaño;
-        $encomienda -> destino_encomienda = $request -> destino;
-        $encomienda -> pago_encomienda = $request -> pago;
-        $encomienda -> descripcion_encomienda = $request -> descripcion;
-        $encomienda -> id_personal = Auth::user()->id;
-        $encomienda -> id_clienteremitente = $origen -> id;
-        $encomienda -> id_clientedestinario = $destino -> id;
-        $encomienda -> save();
+      $destino = New ClienteDestinatario;
+      $destino -> nombre_cliente = $request -> nombre2;
+      $destino -> apellido_cliente = $request -> apellido2;
+      $destino -> dni_cliente = $request -> dni2;
+      $destino -> telefono_cliente = $request -> telefono2;
+      $destino -> direccion_cliente = $request -> direccion2;
+      $destino -> save();
 
+
+      $encomienda = New Encomienda;
+      $encomienda -> peso_encomienda = $request -> peso;
+      $encomienda -> tamaño_encomienda = $request -> tamaño;
+      $encomienda -> destino_encomienda = $request -> destino;
+      $encomienda -> pago_encomienda = $request -> pago;
+      $encomienda -> descripcion_encomienda = $request -> descripcion;
+      $encomienda -> id_personal = Auth::user()->id;
+      $encomienda -> id_clienteremitente = $origen -> id;
+      $encomienda -> id_clientedestinario = $destino -> id;
+      $encomienda -> save();
+
+	     DB::commit();
+	      $success = true;
+      } catch (\Exception $e) {
+	       $success = false;
+          $errorss = $e->getMessage();
+	        return view('inicio',compact('errorss'));
+
+	         DB::rollback();
+    }
+    if ($success) {
         return view('inicio');
+    }
+    //error
+        //   $origen = New ClienteRemitente;
+        //   $origen -> nombre_clienter = $request -> nombre;
+        //   $origen -> apellido_clienter = $request -> apellido;
+        //   $origen -> dni_clienter = $request -> dni;
+        //   $origen -> telefono_clienter = $request -> telefono;
+        //   $origen -> direccion_clienter = $request -> direccion;
+        //   $origen -> save();
+        //
+        //
+        // $destino = New ClienteDestinatario;
+        // $destino -> nombre_cliente = $request -> nombre2;
+        // $destino -> apellido_cliente = $request -> apellido2;
+        // $destino -> dni_cliente = $request -> dni2;
+        // $destino -> telefono_cliente = $request -> telefono2;
+        // $destino -> direccion_cliente = $request -> direccion2;
+        // $destino -> save();
+        //
+        //
+        // $encomienda = New Encomienda;
+        // $encomienda -> peso_encomienda = $request -> peso;
+        // $encomienda -> tamaño_encomienda = $request -> tamaño;
+        // $encomienda -> destino_encomienda = $request -> destino;
+        // $encomienda -> pago_encomienda = $request -> pago;
+        // $encomienda -> descripcion_encomienda = $request -> descripcion;
+        // $encomienda -> id_personal = Auth::user()->id;
+        // $encomienda -> id_clienteremitente = $origen -> id;
+        // $encomienda -> id_clientedestinario = $destino -> id;
+        // $encomienda -> save();
+
+        //return view('inicio');
     }
 
     /**

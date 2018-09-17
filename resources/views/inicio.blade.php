@@ -36,7 +36,7 @@
   </div>
 </nav>
 
-@if ($errors->any())
+<!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -44,7 +44,18 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif -->
+
+<!-- @if ($errorss->any())
+    <div class="alert alert-danger">
+      {{ $errorss }}
+    </div>
+@endif -->
+<<?php
+if isset($errorss){
+  echo $errorss;
+}
+ ?>
 
 <div id="contenedorrr">
 
