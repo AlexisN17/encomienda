@@ -24,7 +24,7 @@ class EncomiendasController extends Controller
                    'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente',
                    'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
           ->where('estado_encomienda','=',false)
-          ->get();
+          ->paginate(8);
 
           return view('entrega',compact('encomienda'));
 

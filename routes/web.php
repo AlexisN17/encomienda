@@ -16,9 +16,8 @@ Route::group(['middleware' => 'auth'], function ()
       return view('inicio');
   });
 
-  Route::get('/inicio', function () {
-      return view('inicio');
-  });
+  Route::get('inicio', 'EnviosController@index');
+
   Route::get ("entrega", function(){
   	return view ("entrega");
   });
@@ -30,6 +29,13 @@ Route::group(['middleware' => 'auth'], function ()
   Route::post("inicioajax", 'EnviosController@buscar');
   Route::post("inicioajax2", 'EnviosController@buscar2');
   Route::post("inicio", 'EnviosController@store');
+
+  Route::get('users', function () {
+      $users = User::paginate(5);
+
+      return view('some.view')->withUsers($users);
+
+  });
 
   Route::get('encomiendas/{id}/entregado', 'EncomiendasController@entregado');
 });

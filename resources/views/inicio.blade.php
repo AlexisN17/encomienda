@@ -36,7 +36,7 @@
   </div>
 </nav>
 
-<!-- @if ($errors->any())
+@if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -44,18 +44,9 @@
             @endforeach
         </ul>
     </div>
-@endif -->
+@endif
 
-<!-- @if ($errorss->any())
-    <div class="alert alert-danger">
-      {{ $errorss }}
-    </div>
-@endif -->
-<<?php
-if isset($errorss){
-  echo $errorss;
-}
- ?>
+{{ $mensajeerror }}
 
 <div id="contenedorrr">
 
@@ -133,7 +124,6 @@ if isset($errorss){
     <br>
     <br>
     <br>
-    <!-- {{Form::submit('Registrar', ['style' => 'btn-primary'])}} -->
     <div class="form-group">
       <button type="submit" name="button" class="btn btn-primary"> Registrar</button>
     </div>
@@ -156,7 +146,6 @@ if isset($errorss){
       $("#dni").keydown(function (e) {
       if(e.keyCode == 13) {
           var valor = this.value;
-          //alert(valor);
           if (valor.length>0){
             $.ajax({  //asicrono x default
                    url:"inicioajax", //obligatorio donde se mandan
@@ -168,7 +157,6 @@ if isset($errorss){
                     $('#apellido').val(data[0]['apellido_clienter']);
                     $('#telefono').val(data[0]['telefono_clienter']);
                     $('#direccion').val(data[0]['direccion_clienter']);
-                    //alert (JSON.stringify(datos));
 
                    }, //si sale bien se ejecuta
                    error: function(){
@@ -176,7 +164,6 @@ if isset($errorss){
                    } //si hay error se ejecuta
 
             });
-            //alert(valor);
           } else{
             alert("ingresar dni");
           }
@@ -185,7 +172,6 @@ if isset($errorss){
      $("#dni2").keydown(function (e) {
      if(e.keyCode == 13) {
          var valor2 = this.value;
-         //alert(valor);
          if (valor2.length>0){
            $.ajax({  //asicrono x default
                   url:"inicioajax2", //obligatorio donde se mandan
@@ -197,7 +183,6 @@ if isset($errorss){
                    $('#apellido2').val(data[0]['apellido_cliente']);
                    $('#telefono2').val(data[0]['telefono_cliente']);
                    $('#direccion2').val(data[0]['direccion_cliente']);
-                   //alert (JSON.stringify(datos));
 
                   }, //si sale bien se ejecuta
                   error: function(){
@@ -205,21 +190,11 @@ if isset($errorss){
                   } //si hay error se ejecuta
 
            });
-           //alert(valor);
          } else{
            alert("ingresar dni");
          }
      }
     });
-
-
-
-
-// function dni(){
-//   //capurar evento
-//   //ajax buscar cliente --- datos
-// }
-
 
   </script>
 
