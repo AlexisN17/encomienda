@@ -13,8 +13,6 @@ use DB;
 use App\Quotation;
 
 
-
-
 class EnviosController extends Controller
 {
     /**
@@ -87,11 +85,7 @@ class EnviosController extends Controller
           ]);
 
 
-         // $cliente_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->get();
-         //
-         // if (is_null($cliente_aux))
-         // {
-         $errorss = null;
+         $errores = null;
     DB::beginTransaction();
     try {
 
@@ -127,47 +121,17 @@ class EnviosController extends Controller
 	     DB::commit();
 	      $success = true;
       } catch (\Exception $e) {
-	       $success = false;
-          $errorss = $e->getMessage();
-	        return view('inicio',compact('errorss'));
+	        $success = false;
+          $errores = $e->getMessage();
+	        return view('inicio',compact('errores'));
 
 	         DB::rollback();
     }
     if ($success) {
-        return view('inicio');
+      return view('inicio');
     }
-    //error
-        //   $origen = New ClienteRemitente;
-        //   $origen -> nombre_clienter = $request -> nombre;
-        //   $origen -> apellido_clienter = $request -> apellido;
-        //   $origen -> dni_clienter = $request -> dni;
-        //   $origen -> telefono_clienter = $request -> telefono;
-        //   $origen -> direccion_clienter = $request -> direccion;
-        //   $origen -> save();
-        //
-        //
-        // $destino = New ClienteDestinatario;
-        // $destino -> nombre_cliente = $request -> nombre2;
-        // $destino -> apellido_cliente = $request -> apellido2;
-        // $destino -> dni_cliente = $request -> dni2;
-        // $destino -> telefono_cliente = $request -> telefono2;
-        // $destino -> direccion_cliente = $request -> direccion2;
-        // $destino -> save();
-        //
-        //
-        // $encomienda = New Encomienda;
-        // $encomienda -> peso_encomienda = $request -> peso;
-        // $encomienda -> tamaño_encomienda = $request -> tamaño;
-        // $encomienda -> destino_encomienda = $request -> destino;
-        // $encomienda -> pago_encomienda = $request -> pago;
-        // $encomienda -> descripcion_encomienda = $request -> descripcion;
-        // $encomienda -> id_personal = Auth::user()->id;
-        // $encomienda -> id_clienteremitente = $origen -> id;
-        // $encomienda -> id_clientedestinario = $destino -> id;
-        // $encomienda -> save();
 
-        //return view('inicio');
-    }
+}
 
     /**
      * Display the specified resource.
@@ -188,7 +152,8 @@ class EnviosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $encomienda = $id;
+        return view('editar',compact('encomienda'));
     }
 
     /**
@@ -200,7 +165,17 @@ class EnviosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $encomienda = Encomienda::find($id);
+
+        $encomienda -> peso_encomienda = $request -> peso;
+        $encomienda -> tamaño_encomienda = $request -> tamaño;
+        $encomienda -> destino_encomienda = $request -> destino;
+        $encomienda -> pago_encomienda = $request -> pago;
+        $encomienda -> descripcion_encomienda = $request -> descripcion;
+
+        $encomienda->save();
+
+        return redirect;
     }
 
     /**

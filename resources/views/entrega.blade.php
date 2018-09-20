@@ -77,7 +77,7 @@
 
 
                                     <td>
-                                      <a href="" class="btn btn-warning btn-xs">Editar</a> <br>
+                                      <a href="encomiendas/{{$encomiendas->id}}/editar" class="btn btn-warning btn-xs">Editar</a> <br>
                                       <a href="encomiendas/{{$encomiendas->id}}/entregado" class="btn btn-danger btn-xs" >Entregado</a>
                                    </td>
 

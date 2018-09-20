@@ -27,11 +27,17 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get ("cliente", function(){
   	return view ("cliente");
   });
+  Route::get ("editar", function(){
+    return view ("editar");
+  });
+
   Route::post("inicioajax", 'EnviosController@buscar');
   Route::post("inicioajax2", 'EnviosController@buscar2');
   Route::post("inicio", 'EnviosController@store');
 
   Route::get('encomiendas/{id}/entregado', 'EncomiendasController@entregado');
+  Route::get('encomiendas/{id}/editar', 'EnviosController@edit');
+
 });
 
 Route::get("login", function(){
