@@ -16,9 +16,10 @@ Route::group(['middleware' => 'auth'], function ()
       return view('inicio');
   });
 
-  Route::get('/inicio', function () {
+  Route::get('inicio', function () {
       return view('inicio');
   });
+
   Route::get ("entrega", function(){
   	return view ("entrega");
   });

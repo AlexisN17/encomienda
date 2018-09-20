@@ -90,7 +90,7 @@
 
                             </table>
 
-
+                            {{ $encomienda->links() }}
 
                          </div>
 

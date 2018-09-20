@@ -24,7 +24,7 @@ class EnviosController extends Controller
      */
     public function index()
     {
-
+      //
     }
 
     /**
@@ -43,6 +43,7 @@ class EnviosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
 
@@ -66,11 +67,11 @@ class EnviosController extends Controller
              'telefono2' => 'required|max:255',
              'direccion2' => 'required|max:255',
          ],[
-             'nombre.required' => 'El campo nombre es obligatorio',
-             'apellido.required' => 'El campo apellido es obligatorio',
-             'dni.required' => 'El campo DNI es obligatorio',
-             'telefono.required' => 'El campo telefono es obligatorio',
-             'direccion.required' => 'El campo direccion es obligatorio',
+             'nombre.required' => 'El campo nombre remitente es obligatorio',
+             'apellido.required' => 'El campo apellido remitente es obligatorio',
+             'dni.required' => 'El campo DNI remitente es obligatorio',
+             'telefono.required' => 'El campo telefono remitente es obligatorio',
+             'direccion.required' => 'El campo direccion remitente es obligatorio',
 
              'peso.required' => 'El campo peso es obligatorio',
              'tamaño.required' => 'El campo tamaño es obligatorio',
@@ -78,11 +79,11 @@ class EnviosController extends Controller
              'pago.required' => 'El campo pago es obligatorio',
              'descripcion.required' => 'El campo descripcion es obligatorio',
 
-             'nombre2.required' => 'El campo nombre es obligatorio',
-             'apellido2.required' => 'El campo apellido es obligatorio',
-             'dni2.required' => 'El campo DNI es obligatorio',
-             'telefono2.required' => 'El campo telefono es obligatorio',
-             'direccion2.required' => 'El campo direccion es obligatorio',
+             'nombre2.required' => 'El campo nombre destinatario es obligatorio',
+             'apellido2.required' => 'El campo apellido destinatario es obligatorio',
+             'dni2.required' => 'El campo DNI destinatario es obligatorio',
+             'telefono2.required' => 'El campo telefono destinatario es obligatorio',
+             'direccion2.required' => 'El campo direccion destinatario es obligatorio',
 
           ]);
 
@@ -91,82 +92,50 @@ class EnviosController extends Controller
          //
          // if (is_null($cliente_aux))
          // {
-         $errorss = null;
-    DB::beginTransaction();
-    try {
+         $errores = null;
+         DB::beginTransaction();
+         try {
 
-      $origen = New ClienteRemitente;
-      $origen -> nombre_clienter = $request -> nombre;
-      $origen -> apellido_clienter = $request -> apellido;
-      $origen -> dni_clienter = $request -> dni;
-      $origen -> telefono_clienter = $request -> telefono;
-      $origen -> direccion_clienter = $request -> direccion;
-      $origen -> save();
-
-
-      $destino = New ClienteDestinatario;
-      $destino -> nombre_cliente = $request -> nombre2;
-      $destino -> apellido_cliente = $request -> apellido2;
-      $destino -> dni_cliente = $request -> dni2;
-      $destino -> telefono_cliente = $request -> telefono2;
-      $destino -> direccion_cliente = $request -> direccion2;
-      $destino -> save();
+           $origen = New ClienteRemitente;
+           $origen -> nombre_clienter = $request -> nombre;
+           $origen -> apellido_clienter = $request -> apellido;
+           $origen -> dni_clienter = $request -> dni;
+           $origen -> telefono_clienter = $request -> telefono;
+           $origen -> direccion_clienter = $request -> direccion;
+           $origen -> save();
 
 
-      $encomienda = New Encomienda;
-      $encomienda -> peso_encomienda = $request -> peso;
-      $encomienda -> tamaño_encomienda = $request -> tamaño;
-      $encomienda -> destino_encomienda = $request -> destino;
-      $encomienda -> pago_encomienda = $request -> pago;
-      $encomienda -> descripcion_encomienda = $request -> descripcion;
-      $encomienda -> id_personal = Auth::user()->id;
-      $encomienda -> id_clienteremitente = $origen -> id;
-      $encomienda -> id_clientedestinario = $destino -> id;
-      $encomienda -> save();
+           $destino = New ClienteDestinatario;
+           $destino -> nombre_cliente = $request -> nombre2;
+           $destino -> apellido_cliente = $request -> apellido2;
+           $destino -> dni_cliente = $request -> dni2;
+           $destino -> telefono_cliente = $request -> telefono2;
+           $destino -> direccion_cliente = $request -> direccion2;
+           $destino -> save();
 
-	     DB::commit();
-	      $success = true;
-      } catch (\Exception $e) {
-	       $success = false;
-          $errorss = $e->getMessage();
-	        return view('inicio',compact('errorss'));
 
-	         DB::rollback();
-    }
-    if ($success) {
-        return view('inicio');
-    }
-    //error
-        //   $origen = New ClienteRemitente;
-        //   $origen -> nombre_clienter = $request -> nombre;
-        //   $origen -> apellido_clienter = $request -> apellido;
-        //   $origen -> dni_clienter = $request -> dni;
-        //   $origen -> telefono_clienter = $request -> telefono;
-        //   $origen -> direccion_clienter = $request -> direccion;
-        //   $origen -> save();
-        //
-        //
-        // $destino = New ClienteDestinatario;
-        // $destino -> nombre_cliente = $request -> nombre2;
-        // $destino -> apellido_cliente = $request -> apellido2;
-        // $destino -> dni_cliente = $request -> dni2;
-        // $destino -> telefono_cliente = $request -> telefono2;
-        // $destino -> direccion_cliente = $request -> direccion2;
-        // $destino -> save();
-        //
-        //
-        // $encomienda = New Encomienda;
-        // $encomienda -> peso_encomienda = $request -> peso;
-        // $encomienda -> tamaño_encomienda = $request -> tamaño;
-        // $encomienda -> destino_encomienda = $request -> destino;
-        // $encomienda -> pago_encomienda = $request -> pago;
-        // $encomienda -> descripcion_encomienda = $request -> descripcion;
-        // $encomienda -> id_personal = Auth::user()->id;
-        // $encomienda -> id_clienteremitente = $origen -> id;
-        // $encomienda -> id_clientedestinario = $destino -> id;
-        // $encomienda -> save();
+           $encomienda = New Encomienda;
+           $encomienda -> peso_encomienda = $request -> peso;
+           $encomienda -> tamaño_encomienda = $request -> tamaño;
+           $encomienda -> destino_encomienda = $request -> destino;
+           $encomienda -> pago_encomienda = $request -> pago;
+           $encomienda -> descripcion_encomienda = $request -> descripcion;
+           $encomienda -> id_personal = Auth::user()->id;
+           $encomienda -> id_clienteremitente = $origen -> id;
+           $encomienda -> id_clientedestinario = $destino -> id;
+           $encomienda -> save();
 
-        //return view('inicio');
+	       DB::commit();
+	       $success = true;
+         } catch (\Exception $e) {
+	          $success = false;
+            $errores = $e->getMessage();
+	       DB::rollback();
+         return view('inicio', compact('errores'));
+         }
+         if ($success) {
+           return redirect('inicio');
+         }
     }
 
     /**
