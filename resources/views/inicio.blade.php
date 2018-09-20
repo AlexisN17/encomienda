@@ -46,12 +46,14 @@
     </div>
 @endif
 
+
 @if (!empty($errores))
     <div class="alert alert-danger">
         <ul>
                 <li>{{ 'Hubo un error al intentar guardar los datos',$errores }}</li>
     </div>
 @endif
+
 
 <div id="contenedorrr">
 

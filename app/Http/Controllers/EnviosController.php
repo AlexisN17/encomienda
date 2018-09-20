@@ -92,6 +92,7 @@ class EnviosController extends Controller
          //
          // if (is_null($cliente_aux))
          // {
+
          $errores = null;
          DB::beginTransaction();
          try {
@@ -136,6 +137,8 @@ class EnviosController extends Controller
          if ($success) {
            return redirect('inicio');
          }
+
+
     }
 
     /**
