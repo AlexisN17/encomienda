@@ -45,6 +45,7 @@
         </ul>
     </div>
 @endif
+<<<<<<< HEAD
 
 
 @if (!empty($errores))
@@ -55,6 +56,17 @@
 
 
 
+=======
+
+
+@if (!empty($errores))
+    <div class="alert alert-danger">
+        <ul>
+                <li>{{ 'Hubo un error al intentar guardar los datos',$errores }}</li>
+    </div>
+@endif
+
+>>>>>>> ae8c0b7119f58e09fd16b4403ad5848f8d1c0305
 
 <div id="contenedorrr">
 
@@ -132,7 +144,6 @@
     <br>
     <br>
     <br>
-    <!-- {{Form::submit('Registrar', ['style' => 'btn-primary'])}} -->
     <div class="form-group">
       <button type="submit" name="button" class="btn btn-primary"> Registrar</button>
     </div>
@@ -155,7 +166,6 @@
       $("#dni").keydown(function (e) {
       if(e.keyCode == 13) {
           var valor = this.value;
-          //alert(valor);
           if (valor.length>0){
             $.ajax({  //asicrono x default
                    url:"inicioajax", //obligatorio donde se mandan
@@ -167,7 +177,6 @@
                     $('#apellido').val(data[0]['apellido_clienter']);
                     $('#telefono').val(data[0]['telefono_clienter']);
                     $('#direccion').val(data[0]['direccion_clienter']);
-                    //alert (JSON.stringify(datos));
 
                    }, //si sale bien se ejecuta
                    error: function(){
@@ -175,7 +184,6 @@
                    } //si hay error se ejecuta
 
             });
-            //alert(valor);
           } else{
             alert("ingresar dni");
           }
@@ -184,7 +192,6 @@
      $("#dni2").keydown(function (e) {
      if(e.keyCode == 13) {
          var valor2 = this.value;
-         //alert(valor);
          if (valor2.length>0){
            $.ajax({  //asicrono x default
                   url:"inicioajax2", //obligatorio donde se mandan
@@ -196,7 +203,6 @@
                    $('#apellido2').val(data[0]['apellido_cliente']);
                    $('#telefono2').val(data[0]['telefono_cliente']);
                    $('#direccion2').val(data[0]['direccion_cliente']);
-                   //alert (JSON.stringify(datos));
 
                   }, //si sale bien se ejecuta
                   error: function(){
@@ -204,21 +210,11 @@
                   } //si hay error se ejecuta
 
            });
-           //alert(valor);
          } else{
            alert("ingresar dni");
          }
      }
     });
-
-
-
-
-// function dni(){
-//   //capurar evento
-//   //ajax buscar cliente --- datos
-// }
-
 
   </script>
 

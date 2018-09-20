@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Encomienda;
 use App\ClienteRemitente;
 use App\ClienteDestinatario;
@@ -24,7 +25,7 @@ class EncomiendasController extends Controller
                    'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente',
                    'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
           ->where('estado_encomienda','=',false)
-          ->get();
+          ->paginate(8);
 
           return view('entrega',compact('encomienda'));
 
