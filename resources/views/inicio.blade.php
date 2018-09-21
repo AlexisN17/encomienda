@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
    <title>Integral Pack</title>
@@ -45,18 +45,6 @@
         </ul>
     </div>
 @endif
-<<<<<<< HEAD
-
-
-@if (!empty($errores))
-   <div class="alert alert-danger">
-          {{'Cliente ya registrado', $errores }}
-   </div>
-@endif
-
-
-
-=======
 
 
 @if (!empty($errores))
@@ -66,7 +54,6 @@
     </div>
 @endif
 
->>>>>>> ae8c0b7119f58e09fd16b4403ad5848f8d1c0305
 
 <div id="contenedorrr">
 

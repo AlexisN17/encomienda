@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function ()
   Route::post("inicio", 'EnviosController@store');
 
   Route::get('encomiendas/{id}/entregado', 'EncomiendasController@entregado');
+  Route::post('encomiendas/{id}/actualizar', 'EnviosController@update');
   Route::get('encomiendas/{id}/editar', 'EnviosController@edit');
 
 });

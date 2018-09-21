@@ -86,52 +86,6 @@ class EnviosController extends Controller
           ]);
 
 
-<<<<<<< HEAD
-         $errores = null;
-    DB::beginTransaction();
-    try {
-
-      $origen = New ClienteRemitente;
-      $origen -> nombre_clienter = $request -> nombre;
-      $origen -> apellido_clienter = $request -> apellido;
-      $origen -> dni_clienter = $request -> dni;
-      $origen -> telefono_clienter = $request -> telefono;
-      $origen -> direccion_clienter = $request -> direccion;
-      $origen -> save();
-
-
-      $destino = New ClienteDestinatario;
-      $destino -> nombre_cliente = $request -> nombre2;
-      $destino -> apellido_cliente = $request -> apellido2;
-      $destino -> dni_cliente = $request -> dni2;
-      $destino -> telefono_cliente = $request -> telefono2;
-      $destino -> direccion_cliente = $request -> direccion2;
-      $destino -> save();
-
-
-      $encomienda = New Encomienda;
-      $encomienda -> peso_encomienda = $request -> peso;
-      $encomienda -> tamaño_encomienda = $request -> tamaño;
-      $encomienda -> destino_encomienda = $request -> destino;
-      $encomienda -> pago_encomienda = $request -> pago;
-      $encomienda -> descripcion_encomienda = $request -> descripcion;
-      $encomienda -> id_personal = Auth::user()->id;
-      $encomienda -> id_clienteremitente = $origen -> id;
-      $encomienda -> id_clientedestinario = $destino -> id;
-      $encomienda -> save();
-
-	     DB::commit();
-	      $success = true;
-      } catch (\Exception $e) {
-	        $success = false;
-          $errores = $e->getMessage();
-	        return view('inicio',compact('errores'));
-
-	         DB::rollback();
-    }
-    if ($success) {
-      return view('inicio');
-=======
          // $cliente_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->get();
          //
          // if (is_null($cliente_aux))
@@ -183,10 +137,9 @@ class EnviosController extends Controller
          }
 
 
->>>>>>> ae8c0b7119f58e09fd16b4403ad5848f8d1c0305
     }
 
-}
+
 
     /**
      * Display the specified resource.
@@ -207,7 +160,16 @@ class EnviosController extends Controller
      */
     public function edit($id)
     {
-        $encomienda = $id;
+
+      $encomienda = DB::table('encomiendas')
+      ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+      ->join('clientesdestinatario','clientesdestinatario.id','=','encomiendas.id_clientedestinario')
+      ->select('encomiendas.*',
+               'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente','clientesdestinatario.telefono_cliente','clientesdestinatario.direccion_cliente',
+               'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter','clientesremitentes.telefono_clienter','clientesremitentes.direccion_clienter')
+      ->where('estado_encomienda','=',false)
+      ->where('encomiendas.id','=',$id)
+      ->get();
         return view('editar',compact('encomienda'));
     }
 
@@ -220,17 +182,31 @@ class EnviosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $encomienda = Encomienda::find($id);
+        $origen -> nombre_clienter = $request -> nombre;
+        $origen -> apellido_clienter = $request -> apellido;
+        $origen -> dni_clienter = $request -> dni;
+        $origen -> telefono_clienter = $request -> telefono;
+        $origen -> direccion_clienter = $request -> direccion;
+        $origen -> save();
+
+        $destino -> nombre_cliente = $request -> nombre2;
+        $destino -> apellido_cliente = $request -> apellido2;
+        $destino -> dni_cliente = $request -> dni2;
+        $destino -> telefono_cliente = $request -> telefono2;
+        $destino -> direccion_cliente = $request -> direccion2;
+        $destino -> save();
 
         $encomienda -> peso_encomienda = $request -> peso;
         $encomienda -> tamaño_encomienda = $request -> tamaño;
         $encomienda -> destino_encomienda = $request -> destino;
         $encomienda -> pago_encomienda = $request -> pago;
         $encomienda -> descripcion_encomienda = $request -> descripcion;
+        $encomienda -> id_personal = Auth::user()->id;
+        $encomienda -> id_clienteremitente = $origen -> id;
+        $encomienda -> id_clientedestinario = $destino -> id;
+        $encomienda -> save();
 
-        $encomienda->save();
-
-        return redirect;
+        return view ('inicio');
     }
 
     /**
