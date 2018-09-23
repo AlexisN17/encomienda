@@ -4,11 +4,11 @@
   <title>Editar</title>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <link rel="stylesheet" href="/encomiendas/public/css/bootstrap.min.css">
- <link rel="stylesheet" type="text/css" href="/encomiendas/public/css/estilo.css">
+ <link rel="stylesheet" href="/encomienda/public/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="/encomienda/public/css/estilo.css">
  <!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
 
- <script src="/encomiendas/public/js/jquery-3.3.1.min.js"></script>
+ <script src="/encomienda/public/js/jquery-3.3.1.min.js"></script>
  <!--   <script src="js/vue.js"></script>-->
 
 </head>
@@ -32,7 +32,7 @@
        {{ csrf_field() }}
        </form></li>
    </ul>
-   <img src="/encomiendas/public/css/logos_ip_flecha.jpg" width="200" height="50">
+   <img src="/encomienda/public/css/logos_ip_flecha.jpg" width="200" height="50">
  </div>
 </nav>
 
@@ -60,7 +60,7 @@
 
 
 
-  <form id="F1" action="{{ route('encomiendas/$encomienda[0]->id/actualizar') }}" method="post" onkeypress="return pulsar(event)">
+  {{Form::model($encomienda, ['url' => ['encomiendas', $encomienda[0]->id,'actualizar']])}}
    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
    <div id="izquierda">
@@ -147,63 +147,13 @@
             history.pushState(null, null, url);
         });
 
-        function pulsar(e) {
-          tecla = (document.all) ? e.keyCode:e.which;
-          return (tecla !=13);
+        function stopRKey(evt) {
+           var evt = (evt) ? evt : ((event) ? event : null);
+           var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+           if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
         }
+        document.onkeypress = stopRKey;
 
-        $("#dni").keydown(function (e) {
-        if(e.keyCode == 13) {
-            var valor = this.value;
-            if (valor.length>0){
-              $.ajax({  //asicrono x default
-                     url:"inicioajax", //obligatorio donde se mandan
-                     data:{valor,"_token":"{{csrf_token()}}"},     //obligatorio
-                     type:'post',    //obligatorio por donde se manda
-                     datatype:'JSON', //obligatorio
-                     success: function(data){
-                      $('#nombre').val(data[0]['nombre_clienter']);
-                      $('#apellido').val(data[0]['apellido_clienter']);
-                      $('#telefono').val(data[0]['telefono_clienter']);
-                      $('#direccion').val(data[0]['direccion_clienter']);
-
-                     }, //si sale bien se ejecuta
-                     error: function(){
-                       alert("dsadsa")
-                     } //si hay error se ejecuta
-
-              });
-            } else{
-              alert("ingresar dni");
-            }
-        }
-       });
-       $("#dni2").keydown(function (e) {
-       if(e.keyCode == 13) {
-           var valor2 = this.value;
-           if (valor2.length>0){
-             $.ajax({  //asicrono x default
-                    url:"inicioajax2", //obligatorio donde se mandan
-                    data:{valor2,"_token":"{{csrf_token()}}"},     //obligatorio
-                    type:'post',    //obligatorio por donde se manda
-                    datatype:'JSON', //obligatorio
-                    success: function(data){
-                     $('#nombre2').val(data[0]['nombre_cliente']);
-                     $('#apellido2').val(data[0]['apellido_cliente']);
-                     $('#telefono2').val(data[0]['telefono_cliente']);
-                     $('#direccion2').val(data[0]['direccion_cliente']);
-
-                    }, //si sale bien se ejecuta
-                    error: function(){
-                      alert("dsadsa")
-                    } //si hay error se ejecuta
-
-             });
-           } else{
-             alert("ingresar dni");
-           }
-       }
-      });
 
     </script>
 

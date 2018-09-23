@@ -182,6 +182,9 @@ class EnviosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $origenid = Encomienda::where('id', '=', $id)->select('id_clienteremitente')->get();
+
+        $origen = ClienteRemitente::find($origenid)->first();
         $origen -> nombre_clienter = $request -> nombre;
         $origen -> apellido_clienter = $request -> apellido;
         $origen -> dni_clienter = $request -> dni;
@@ -189,6 +192,9 @@ class EnviosController extends Controller
         $origen -> direccion_clienter = $request -> direccion;
         $origen -> save();
 
+        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->get();
+
+        $destino = ClienteDestinatario::find($destinoid)->first();
         $destino -> nombre_cliente = $request -> nombre2;
         $destino -> apellido_cliente = $request -> apellido2;
         $destino -> dni_cliente = $request -> dni2;
@@ -196,6 +202,7 @@ class EnviosController extends Controller
         $destino -> direccion_cliente = $request -> direccion2;
         $destino -> save();
 
+        $encomienda = Encomienda::find($id);
         $encomienda -> peso_encomienda = $request -> peso;
         $encomienda -> tamaño_encomienda = $request -> tamaño;
         $encomienda -> destino_encomienda = $request -> destino;
@@ -206,7 +213,7 @@ class EnviosController extends Controller
         $encomienda -> id_clientedestinario = $destino -> id;
         $encomienda -> save();
 
-        return view ('inicio');
+        return redirect()->action('EncomiendasController@index');
     }
 
     /**
