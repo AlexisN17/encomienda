@@ -17,8 +17,8 @@ class CreateClientesDestinatarioTable extends Migration
             $table->increments('id');
             $table->string('nombre_cliente');
             $table->string('apellido_cliente');
-            $table->integer('dni_cliente' 20)->unique();
-            $table->integer('telefono_cliente' 20);
+            $table->bigInteger('dni_cliente')->unique();
+            $table->bigInteger('telefono_cliente');
             $table->string('direccion_cliente');
     });
    }

@@ -193,7 +193,7 @@ class EnviosController extends Controller
       DB::beginTransaction();
       try {
 
-        $origenid = Encomienda::where('id', '=', $id)->select('id_clienteremitente')->first();
+        $origenid = Encomienda::where('id', '=', $id)->select('id_clienteremitente')->get();
 
         $origen = ClienteRemitente::find($origenid)->first();
         $origen -> nombre_clienter = $request -> nombre;
@@ -204,7 +204,7 @@ class EnviosController extends Controller
         $origen -> save();
 
 
-        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->first();
+        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->get();
 
         $destino = ClienteDestinatario::find($destinoid)->first();
         $destino -> nombre_cliente = $request -> nombre2;
