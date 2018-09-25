@@ -17,8 +17,8 @@ class CreateClientesRemitentesTable extends Migration
             $table->increments('id');
             $table->string('nombre_clienter');
             $table->string('apellido_clienter');
-            $table->integer('dni_clienter')->unique();
-            $table->integer('telefono_clienter');
+            $table->integer('dni_clienter', 20)->unique();
+            $table->integer('telefono_clienter' 20);
             $table->string('direccion_clienter');
 
         });

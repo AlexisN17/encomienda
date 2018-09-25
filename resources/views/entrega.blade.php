@@ -3,11 +3,11 @@
 <head> <title>Integral Pack</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/estilo.css">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/estilo.css')}}">
   <!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 
-  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
   <!--   <script src="js/vue.js"></script> -->
 
 </head>
@@ -21,16 +21,17 @@
     <ul class="nav navbar-nav">
       <li ><a href="{{url('/inicio')}}">Envios</a></li>
       <li class="active"><a>Entrega</a></li>
-      <li><a href="{{url('/cliente')}}">Cliente</a></li>
+      <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
       </a>
       <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
       {{ csrf_field() }}
       </form></li>
     </ul>
-    <img src="../public/css/logos_ip_flecha.jpg" width="200" height="50">
+    <img src="{{ asset('css/logos_ip_flecha.jpg')}}" width="200" height="50">
   </div>
 </nav>
+
 
                          <div class="panel-body">
 

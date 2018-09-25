@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('entrega', 'EncomiendasController@index');
 
   Route::get ("cliente", function(){
-  	return view ("cliente");
+  	return view ("inicio");
   });
   Route::get ("editar", function(){
     return view ("editar");

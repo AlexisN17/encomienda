@@ -85,16 +85,13 @@ class EnviosController extends Controller
 
           ]);
 
-
-         // $cliente_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->get();
-         //
-         // if (is_null($cliente_aux))
-         // {
-
          $errores = null;
          DB::beginTransaction();
          try {
 
+           $clienter_aux = ClienteRemitente::where('dni_clienter','=',$request->dni)  ->select('id') ->first();
+           if (empty($clienter_aux))
+           {
            $origen = New ClienteRemitente;
            $origen -> nombre_clienter = $request -> nombre;
            $origen -> apellido_clienter = $request -> apellido;
@@ -102,8 +99,15 @@ class EnviosController extends Controller
            $origen -> telefono_clienter = $request -> telefono;
            $origen -> direccion_clienter = $request -> direccion;
            $origen -> save();
+           $rem = $origen -> id;
+          }
+          else {
+            $rem=$clienter_aux -> id;
+          }
 
-
+          $cliente_aux = ClienteDestinatario::where('dni_cliente','=',$request->dni2)  ->select('id') ->first();
+          if (empty($cliente_aux))
+          {
            $destino = New ClienteDestinatario;
            $destino -> nombre_cliente = $request -> nombre2;
            $destino -> apellido_cliente = $request -> apellido2;
@@ -111,6 +115,11 @@ class EnviosController extends Controller
            $destino -> telefono_cliente = $request -> telefono2;
            $destino -> direccion_cliente = $request -> direccion2;
            $destino -> save();
+           $dest = $destino -> id;
+          }
+          else {
+            $dest=$cliente_aux -> id;
+          }
 
 
            $encomienda = New Encomienda;
@@ -120,8 +129,8 @@ class EnviosController extends Controller
            $encomienda -> pago_encomienda = $request -> pago;
            $encomienda -> descripcion_encomienda = $request -> descripcion;
            $encomienda -> id_personal = Auth::user()->id;
-           $encomienda -> id_clienteremitente = $origen -> id;
-           $encomienda -> id_clientedestinario = $destino -> id;
+           $encomienda -> id_clienteremitente = $rem;
+           $encomienda -> id_clientedestinario = $dest;
            $encomienda -> save();
 
 	       DB::commit();
@@ -135,7 +144,6 @@ class EnviosController extends Controller
          if ($success) {
            return redirect('inicio');
          }
-
 
     }
 
@@ -160,7 +168,6 @@ class EnviosController extends Controller
      */
     public function edit($id)
     {
-
       $encomienda = DB::table('encomiendas')
       ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
       ->join('clientesdestinatario','clientesdestinatario.id','=','encomiendas.id_clientedestinario')
@@ -182,7 +189,11 @@ class EnviosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $origenid = Encomienda::where('id', '=', $id)->select('id_clienteremitente')->get();
+      $errores = null;
+      DB::beginTransaction();
+      try {
+
+        $origenid = Encomienda::where('id', '=', $id)->select('id_clienteremitente')->first();
 
         $origen = ClienteRemitente::find($origenid)->first();
         $origen -> nombre_clienter = $request -> nombre;
@@ -192,7 +203,8 @@ class EnviosController extends Controller
         $origen -> direccion_clienter = $request -> direccion;
         $origen -> save();
 
-        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->get();
+
+        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->first();
 
         $destino = ClienteDestinatario::find($destinoid)->first();
         $destino -> nombre_cliente = $request -> nombre2;
@@ -201,6 +213,7 @@ class EnviosController extends Controller
         $destino -> telefono_cliente = $request -> telefono2;
         $destino -> direccion_cliente = $request -> direccion2;
         $destino -> save();
+
 
         $encomienda = Encomienda::find($id);
         $encomienda -> peso_encomienda = $request -> peso;
@@ -213,7 +226,17 @@ class EnviosController extends Controller
         $encomienda -> id_clientedestinario = $destino -> id;
         $encomienda -> save();
 
-        return redirect()->action('EncomiendasController@index');
+        DB::commit();
+        $success = true;
+        } catch (\Exception $e) {
+           $success = false;
+           $errores = $e->getMessage();
+        DB::rollback();
+        return view('inicio', compact('errores'));
+        }
+        if ($success) {
+          return redirect()->action('EncomiendasController@index');
+        }
     }
 
     /**

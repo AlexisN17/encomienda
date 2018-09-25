@@ -4,11 +4,11 @@
   <title>Editar</title>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <link rel="stylesheet" href="/encomienda/public/css/bootstrap.min.css">
- <link rel="stylesheet" type="text/css" href="/encomienda/public/css/estilo.css">
+ <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('css/estilo.css')}}">
  <!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
 
- <script src="/encomienda/public/js/jquery-3.3.1.min.js"></script>
+ <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
  <!--   <script src="js/vue.js"></script>-->
 
 </head>
@@ -21,9 +21,9 @@
      <a class="navbar-brand" href="#">Integral Pack Express</a>
    </div>
    <ul class="nav navbar-nav">
-     <li><a href="#">Envios</a></li>
+     <li><a href="{{url('/inicio')}}">Envios</a></li>
      <li><a href="{{url('/entrega')}}">Entrega</a></li>
-     <li><a href="{{url('/cliente')}}">Cliente</a></li>
+     <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
      <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
        </a>
 
@@ -32,7 +32,7 @@
        {{ csrf_field() }}
        </form></li>
    </ul>
-   <img src="/encomienda/public/css/logos_ip_flecha.jpg" width="200" height="50">
+   <img src="{{ asset('css/logos_ip_flecha.jpg')}}" width="200" height="50">
  </div>
 </nav>
 
@@ -141,12 +141,6 @@
 <form>
 
     <script>
-        var url = document.URL;
-        history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', function () {
-            history.pushState(null, null, url);
-        });
-
         function stopRKey(evt) {
            var evt = (evt) ? evt : ((event) ? event : null);
            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
