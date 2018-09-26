@@ -8,7 +8,7 @@ use App\Encomienda;
 use App\ClienteRemitente;
 use App\ClienteDestinatario;
 
-class EncomiendasController extends Controller
+class EncomiendaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,9 @@ class EncomiendasController extends Controller
 
           $encomienda = DB::table('encomiendas')
           ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
-          ->join('clientesdestinatario','clientesdestinatario.id','=','encomiendas.id_clientedestinario')
+          ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
           ->select('encomiendas.*',
-                   'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente',
+                   'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente',
                    'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
           ->where('estado_encomienda','=',false)
           ->paginate(10);

@@ -17,7 +17,7 @@ class CreateEncomiendasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('id_personal');
             $table->unsignedInteger('id_clienteremitente');
-            $table->unsignedInteger('id_clientedestinario');
+            $table->unsignedInteger('id_clientedestinatario');
             $table->double('peso_encomienda');
             $table->double('tamaño_encomienda');
             $table->string('destino_encomienda');
@@ -26,7 +26,7 @@ class CreateEncomiendasTable extends Migration
             $table->boolean('estado_encomienda')->default(false);
 
             $table->foreign('id_personal')->references('id')->on('users');
-            $table->foreign('id_clientedestinario')->references('id')->on('ClientesDestinatario');
+            $table->foreign('id_clientedestinatario')->references('id')->on('ClientesDestinatarios');
             $table->foreign('id_clienteremitente')->references('id')->on('ClientesRemitentes');
 
 

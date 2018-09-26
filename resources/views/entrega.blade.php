@@ -53,7 +53,7 @@
                                  <th>Nombre Destinatario</th>
                                  <th>Apellido</th>
                                  <th>DNI</th>
-
+                                 <th>Codigo Encomienda</th>
                               </thead>
                               <tbody>
 
@@ -74,7 +74,7 @@
                                     <td>{{$encomiendas->nombre_cliente}}</td>
                                     <td>{{$encomiendas->apellido_cliente}}</td>
                                     <td>{{$encomiendas->dni_cliente}}</td>
-
+                                    <td>{{$encomiendas->id}}</td>
 
 
                                     <td>

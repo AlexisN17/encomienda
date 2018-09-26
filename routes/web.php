@@ -20,25 +20,19 @@ Route::group(['middleware' => 'auth'], function ()
       return view('inicio');
   });
 
-  Route::get ("entrega", function(){
-  	return view ("entrega");
-  });
-  Route::get('entrega', 'EncomiendasController@index');
+  Route::get('entrega', 'EncomiendaController@index');
 
-  Route::get ("cliente", function(){
-  	return view ("inicio");
-  });
   Route::get ("editar", function(){
     return view ("editar");
   });
 
-  Route::post("inicioajax", 'EnviosController@buscar');
-  Route::post("inicioajax2", 'EnviosController@buscar2');
-  Route::post("inicio", 'EnviosController@store');
+  Route::post("rempordni", 'EnvioController@buscarrem');
+  Route::post("destpordni", 'EnvioController@buscardest');
+  Route::post("storeencomiendas", 'EnvioController@store');
 
-  Route::get('encomiendas/{id}/entregado', 'EncomiendasController@entregado');
-  Route::post('encomiendas/{id}/actualizar', 'EnviosController@update');
-  Route::get('encomiendas/{id}/editar', 'EnviosController@edit');
+  Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');
+  Route::post('encomiendas/{id}/actualizar', 'EnvioController@update');
+  Route::get('encomiendas/{id}/editar', 'EnvioController@edit');
 
 });
 

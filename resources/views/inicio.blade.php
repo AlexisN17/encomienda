@@ -58,7 +58,7 @@
 <div id="contenedorrr">
 
 
-   <form id="F1" action="{{URL('/inicio')}}" method="post" onkeypress="return pulsar(event)">
+   <form id="F1" action="{{URL('/storeencomiendas')}}" method="post" onkeypress="return pulsar(event)">
     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
     <div id="izquierda">
@@ -155,7 +155,7 @@
           var valor = this.value;
           if (valor.length>0){
             $.ajax({  //asicrono x default
-                   url:"inicioajax", //obligatorio donde se mandan
+                   url:"rempordni", //obligatorio donde se mandan
                    data:{valor,"_token":"{{csrf_token()}}"},     //obligatorio
                    type:'post',    //obligatorio por donde se manda
                    datatype:'JSON', //obligatorio
@@ -181,7 +181,7 @@
          var valor2 = this.value;
          if (valor2.length>0){
            $.ajax({  //asicrono x default
-                  url:"inicioajax2", //obligatorio donde se mandan
+                  url:"destpordni", //obligatorio donde se mandan
                   data:{valor2,"_token":"{{csrf_token()}}"},     //obligatorio
                   type:'post',    //obligatorio por donde se manda
                   datatype:'JSON', //obligatorio

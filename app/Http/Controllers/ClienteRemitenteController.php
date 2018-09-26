@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\ClienteRemitente;
 use App\Http\Requests\ClienteDestinatarioRequest;
 
-class ClienteRemitentesController extends Controller
+class ClienteRemitenteController extends Controller
 {
     /**
      * Display a listing of the resource.

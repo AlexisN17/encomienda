@@ -13,7 +13,7 @@ use DB;
 use App\Quotation;
 
 
-class EnviosController extends Controller
+class EnvioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -130,7 +130,7 @@ class EnviosController extends Controller
            $encomienda -> descripcion_encomienda = $request -> descripcion;
            $encomienda -> id_personal = Auth::user()->id;
            $encomienda -> id_clienteremitente = $rem;
-           $encomienda -> id_clientedestinario = $dest;
+           $encomienda -> id_clientedestinatario = $dest;
            $encomienda -> save();
 
 	       DB::commit();
@@ -144,6 +144,7 @@ class EnviosController extends Controller
          if ($success) {
            return redirect('inicio');
          }
+                    return redirect('inicio');
 
     }
 
@@ -170,9 +171,9 @@ class EnviosController extends Controller
     {
       $encomienda = DB::table('encomiendas')
       ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
-      ->join('clientesdestinatario','clientesdestinatario.id','=','encomiendas.id_clientedestinario')
+      ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
       ->select('encomiendas.*',
-               'clientesdestinatario.nombre_cliente','clientesdestinatario.apellido_cliente','clientesdestinatario.dni_cliente','clientesdestinatario.telefono_cliente','clientesdestinatario.direccion_cliente',
+               'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente','clientesdestinatarios.telefono_cliente','clientesdestinatarios.direccion_cliente',
                'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter','clientesremitentes.telefono_clienter','clientesremitentes.direccion_clienter')
       ->where('estado_encomienda','=',false)
       ->where('encomiendas.id','=',$id)
@@ -204,7 +205,7 @@ class EnviosController extends Controller
         $origen -> save();
 
 
-        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinario')->get();
+        $destinoid = Encomienda::where('id', '=', $id)->select('id_clientedestinatario')->get();
 
         $destino = ClienteDestinatario::find($destinoid)->first();
         $destino -> nombre_cliente = $request -> nombre2;
@@ -223,7 +224,7 @@ class EnviosController extends Controller
         $encomienda -> descripcion_encomienda = $request -> descripcion;
         $encomienda -> id_personal = Auth::user()->id;
         $encomienda -> id_clienteremitente = $origen -> id;
-        $encomienda -> id_clientedestinario = $destino -> id;
+        $encomienda -> id_clientedestinatario = $destino -> id;
         $encomienda -> save();
 
         DB::commit();
@@ -235,7 +236,7 @@ class EnviosController extends Controller
         return view('inicio', compact('errores'));
         }
         if ($success) {
-          return redirect()->action('EncomiendasController@index');
+          return redirect()->action('EncomiendaController@index');
         }
     }
 
@@ -255,12 +256,12 @@ class EnviosController extends Controller
     //   return redirect('entrega');
     // }
 
-    public function buscar(Request $request){
+    public function buscarrem(Request $request){
       $aux = ClienteRemitente::where('dni_clienter','=', $request->valor ) ->get();
       return $aux;
       }
 
-    public function buscar2(Request $request2){
+    public function buscardest(Request $request2){
         $aux = ClienteDestinatario::where('dni_cliente','=', $request2->valor2 ) ->get();
         return $aux;
         }
