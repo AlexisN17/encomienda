@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function ()
   Route::post("rempordni", 'EnvioController@buscarrem');
   Route::post("destpordni", 'EnvioController@buscardest');
   Route::post("buscarencomienda", 'EncomiendaController@busqueda');
+  Route::post("buscarencomiendadespach", 'EncomiendaController@busquedadespach');
   Route::post("storeencomiendas", 'EnvioController@store');
 
   Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');

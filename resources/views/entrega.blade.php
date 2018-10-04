@@ -22,7 +22,6 @@
       <li ><a href="{{url('/inicio')}}">Envios</a></li>
       <li class="active"><a>Entrega</a></li>
       <li><a href="{{url('/despachados')}}">Despachados</a></li>
-      <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
       </a>
       <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -38,7 +37,7 @@
 
                            <input type="text" name="busqueda" id="busqueda" placeholder="Buscar..">
 
-                            <table id="tabla" class="table table-bordered">
+                            <table class="table table-bordered">
 
 
                                 <th>Nombre Remitente</th>
@@ -58,11 +57,9 @@
                                  <th>DNI</th>
                                  <th>Codigo Encomienda</th>
                               </thead>
-                              <tbody>
-                                
-                              <div id="tablabusqueda" class="table table-bordered">
-                              @foreach($encomienda as $encomiendas)
+                              <tbody id="tabla">
 
+                              @foreach($encomienda as $encomiendas)
 
                                  <tr class="elementoBuscar">
                                    <td>{{$encomiendas->nombre_clienter}}</td>
@@ -88,11 +85,11 @@
 
                                  </tr>
 
+
                                  @endforeach
 
                               </tbody>
 
-                            </div>
                             </table>
 
                             {{ $encomienda->links() }}
@@ -112,8 +109,7 @@
                type:'POST',    //obligatorio por donde se manda
                datatype:'JSON', //obligatorio
                success: function(data){
-                  $("#tablabusqueda").hide(500);
-
+                  $("#tabla").hide(500);
                }, //si sale bien se ejecuta
                error: function(){
                  alert("dsadsa")
@@ -121,7 +117,7 @@
 
         });
       } else{
-        alert("ingresar dni");
+        $("#tabla").show(500);
       }
   }
  });

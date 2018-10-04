@@ -22,7 +22,6 @@
       <li ><a href="{{url('/inicio')}}">Envios</a></li>
       <li ><a href="{{url('/entrega')}}">Entrega</a></li>
       <li class="active"><a>Despachados</a></li>
-      <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
       </a>
       <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -35,6 +34,8 @@
 
 
                          <div class="panel-body">
+
+                           <input type="text" name="busqueda" id="busqueda" placeholder="Buscar..">
 
                             <table class="table table-bordered">
 
@@ -56,12 +57,11 @@
                                  <th>DNI</th>
                                  <th>Codigo Encomienda</th>
                               </thead>
-                              <tbody>
+                              <tbody id="tabla">
 
                               @foreach($encomienda as $encomiendas)
+                              <tr class="elementoBuscar">
 
-
-                                 <tr class="elementoBuscar">
                                    <td>{{$encomiendas->nombre_clienter}}</td>
                                    <td>{{$encomiendas->apellido_clienter}}</td>
                                    <td>{{$encomiendas->dni_clienter}}</td>
@@ -77,11 +77,8 @@
                                     <td>{{$encomiendas->dni_cliente}}</td>
                                     <td>{{$encomiendas->id}}</td>
 
-
                                  </tr>
-
                                  @endforeach
-
                               </tbody>
 
 
@@ -91,6 +88,35 @@
 
                          </div>
 
+<script>
+
+  $("#busqueda").keydown(function (e) {
+    if(e.keyCode == 13) {
+      var valor = this.value;
+      if (valor.length>0){
+        $.ajax({  //asicrono x default
+              url:"buscarencomiendadespach", //obligatorio donde se mandan
+              data:{valor,"_token":"{{csrf_token()}}"},     //obligatorio
+              type:'POST',    //obligatorio por donde se manda
+              datatype:'JSON', //obligatorio
+              success: function(data){
+                 $("#tabla").hide(500);
+              }, //si sale bien se ejecuta
+              error: function(){
+                alert("dsadsa")
+              } //si hay error se ejecuta
+
+        });
+      } else{
+         $("#tabla").show(500);
+      }
+   }
+  });
+
+
+
+
+</script>
 
 
 

@@ -24,7 +24,6 @@
       <li class="active"><a href="#">Envios</a></li>
       <li><a href="{{url('/entrega')}}">Entrega</a></li>
       <li><a href="{{url('/despachados')}}">Despachados</a></li>
-      <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
         </a>
 
