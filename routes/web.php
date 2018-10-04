@@ -22,12 +22,15 @@ Route::group(['middleware' => 'auth'], function ()
 
   Route::get('entrega', 'EncomiendaController@index');
 
+  Route::get('despachados', 'EncomiendaController@despachados');
+
   Route::get ("editar", function(){
     return view ("editar");
   });
 
   Route::post("rempordni", 'EnvioController@buscarrem');
   Route::post("destpordni", 'EnvioController@buscardest');
+  Route::post("buscarencomienda", 'EncomiendaController@busqueda');
   Route::post("storeencomiendas", 'EnvioController@store');
 
   Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');

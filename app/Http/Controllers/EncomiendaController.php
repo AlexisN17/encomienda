@@ -32,11 +32,50 @@ class EncomiendaController extends Controller
 
      }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+     public function despachados()
+     {
+
+           $encomienda = DB::table('encomiendas')
+           ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+           ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
+           ->select('encomiendas.*',
+                    'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente',
+                    'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
+           ->where('estado_encomienda','=',true)
+           ->paginate(10);
+           return view('despachados',compact('encomienda'));
+
+      }
+
+
+     public function busqueda(Request $request)
+      {
+           $buscar = Encomienda::where('id','=', $request->valor) -> get();
+       //     if($buscar)   {
+       //       foreach ($buscar as $key => $busqueda) {
+       //       $output.='<tr>'.
+       //
+       //       '<td>'.$busqueda->nombre_clienter.'</td>'.
+       //       '<td>'.$busqueda->apellido_clienter.'</td>'.
+       //       '<td>'.$busqueda->dni_clienter.'</td>'.
+       //
+       //
+       //      '<td>'.$busqueda->destino_encomienda.'</td>'.
+       //      '<td>'.$busqueda->descripcion_encomienda.'</td>'.
+       //      '<td>'.$busqueda->pago_encomienda.'</td>'.
+       //
+       //      '<td>'.$busqueda->nombre_cliente.'</td>'.
+       //      '<td>'.$busqueda->apellido_cliente.'</td>'.
+       //      '<td>'.$busqueda->dni_cliente.'</td>'.
+       //      '<td>'.$busqueda->id.'</td>'.
+       //      '</tr>';
+       //
+       //   }
+       // }
+          return $buscar;
+     }
+
+
     public function create()
     {
         //

@@ -20,13 +20,13 @@
     </div>
     <ul class="nav navbar-nav">
       <li ><a href="{{url('/inicio')}}">Envios</a></li>
-      <li class="active"><a>Entrega</a></li>
-      <li><a href="{{url('/despachados')}}">Despachados</a></li>
+      <li ><a href="{{url('/entrega')}}">Entrega</a></li>
+      <li class="active"><a>Despachados</a></li>
       <!-- <li><a href="{{url('/cliente')}}">Cliente</a></li> -->
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
       </a>
       <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-          <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+      {{ csrf_field() }}
       </form></li>
     </ul>
     <img src="{{ asset('css/logos_ip_flecha.jpg')}}" width="200" height="50">
@@ -34,11 +34,9 @@
 </nav>
 
 
-                         <div  class="panel-body">
+                         <div class="panel-body">
 
-                           <input type="text" name="busqueda" id="busqueda" placeholder="Buscar..">
-
-                            <table id="tabla" class="table table-bordered">
+                            <table class="table table-bordered">
 
 
                                 <th>Nombre Remitente</th>
@@ -59,8 +57,7 @@
                                  <th>Codigo Encomienda</th>
                               </thead>
                               <tbody>
-                                
-                              <div id="tablabusqueda" class="table table-bordered">
+
                               @foreach($encomienda as $encomiendas)
 
 
@@ -81,18 +78,13 @@
                                     <td>{{$encomiendas->id}}</td>
 
 
-                                    <td>
-                                      <a href="encomiendas/{{$encomiendas->id}}/editar" class="btn btn-warning btn-xs">Editar</a> <br>
-                                      <a href="encomiendas/{{$encomiendas->id}}/entregado" class="btn btn-danger btn-xs" >Entregado</a>
-                                   </td>
-
                                  </tr>
 
                                  @endforeach
 
                               </tbody>
 
-                            </div>
+
                             </table>
 
                             {{ $encomienda->links() }}
@@ -100,36 +92,6 @@
                          </div>
 
 
-<script>
-
-  $("#busqueda").keydown(function (e) {
-  if(e.keyCode == 13) {
-      var valor = this.value;
-      if (valor.length>0){
-        $.ajax({  //asicrono x default
-               url:"buscarencomienda", //obligatorio donde se mandan
-               data:{valor,"_token":"{{csrf_token()}}"},     //obligatorio
-               type:'POST',    //obligatorio por donde se manda
-               datatype:'JSON', //obligatorio
-               success: function(data){
-                  $("#tablabusqueda").hide(500);
-
-               }, //si sale bien se ejecuta
-               error: function(){
-                 alert("dsadsa")
-               } //si hay error se ejecuta
-
-        });
-      } else{
-        alert("ingresar dni");
-      }
-  }
- });
-
-
-
-
-</script>
 
 
 </body>
