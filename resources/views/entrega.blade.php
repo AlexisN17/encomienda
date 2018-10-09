@@ -57,6 +57,8 @@
                                  <th>DNI</th>
                                  <th>Codigo Encomienda</th>
                               </thead>
+
+                              <tbody id="tablabusqueda">
                               <tbody id="tabla">
 
                               @foreach($encomienda as $encomiendas)
@@ -89,6 +91,7 @@
                                  @endforeach
 
                               </tbody>
+                              </tbody>
 
                             </table>
 
@@ -110,6 +113,21 @@
                datatype:'JSON', //obligatorio
                success: function(data){
                   $("#tabla").hide(500);
+                  var nuevafila= "<tr><td>" +
+                  data[0].nombre_clienter + "</td><td>" +
+                  data[0].apellido_clienter + "</td><td>" +
+                  data[0].dni_clienter + "</td><td>" +
+                  data[0].destino_encomienda + "</td><td>" +
+                  data[0].descripcion_encomienda + "</td><td>" +
+                  data[0].pago_encomienda + "</td><td>" +
+                  data[0].nombre_cliente + "</td><td>" +
+                  data[0].apellido_cliente + "</td><td>" +
+                  data[0].dni_cliente + "</td><td>" +
+                  data[0].id + "</td><td>" +
+                  location.href ="encomiendas/{{$encomiendas->id}}/editar" class="btn btn-warning btn-xs">Editar  + "</td></tr>"  
+
+
+                  $("#tablabusqueda").append(nuevafila)
                }, //si sale bien se ejecuta
                error: function(){
                  alert("dsadsa")
@@ -118,6 +136,7 @@
         });
       } else{
         $("#tabla").show(500);
+        $("#tablabusqueda").hide(500);
       }
   }
  });
