@@ -35,7 +35,7 @@
 
                          <div class="panel-body">
 
-                           <input type="text" name="busqueda" id="busqueda" placeholder="Buscar..">
+                           <input type="text" name="busqueda" id="busqueda" size="30" placeholder="Ingrese código de encomienda..">
 
                             <table class="table table-bordered">
 
@@ -57,6 +57,8 @@
                                  <th>DNI</th>
                                  <th>Codigo Encomienda</th>
                               </thead>
+
+                              <tbody id="tablabusqueda">
                               <tbody id="tabla">
 
                               @foreach($encomienda as $encomiendas)
@@ -80,6 +82,7 @@
                                  </tr>
                                  @endforeach
                               </tbody>
+                              </tbody>
 
 
                             </table>
@@ -100,7 +103,21 @@
               type:'POST',    //obligatorio por donde se manda
               datatype:'JSON', //obligatorio
               success: function(data){
-                 $("#tabla").hide(500);
+                $("#tabla").hide(500);
+                $("#tablabusqueda").show(500);
+                var nuevafila= "<tr><td>" +
+                data[0].nombre_clienter + "</td><td>" +
+                data[0].apellido_clienter + "</td><td>" +
+                data[0].dni_clienter + "</td><td>" +
+                data[0].destino_encomienda + "</td><td>" +
+                data[0].descripcion_encomienda + "</td><td>" +
+                data[0].pago_encomienda + "</td><td>" +
+                data[0].nombre_cliente + "</td><td>" +
+                data[0].apellido_cliente + "</td><td>" +
+                data[0].dni_cliente + "</td><td>" +
+                data[0].id + "</td></tr>"
+
+                $("#tablabusqueda").append(nuevafila)
               }, //si sale bien se ejecuta
               error: function(){
                 alert("dsadsa")
@@ -109,6 +126,7 @@
         });
       } else{
          $("#tabla").show(500);
+         $("#tablabusqueda").empty();
       }
    }
   });

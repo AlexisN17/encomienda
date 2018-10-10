@@ -35,7 +35,7 @@
 
                          <div  class="panel-body">
 
-                           <input type="text" name="busqueda" id="busqueda" placeholder="Buscar..">
+                           <input type="text" name="busqueda" id="busqueda" size="30" placeholder="Ingrese código de encomienda..">
 
                             <table class="table table-bordered">
 
@@ -113,6 +113,7 @@
                datatype:'JSON', //obligatorio
                success: function(data){
                   $("#tabla").hide(500);
+                  $("#tablabusqueda").empty();
                   var nuevafila= "<tr><td>" +
                   data[0].nombre_clienter + "</td><td>" +
                   data[0].apellido_clienter + "</td><td>" +
@@ -123,9 +124,7 @@
                   data[0].nombre_cliente + "</td><td>" +
                   data[0].apellido_cliente + "</td><td>" +
                   data[0].dni_cliente + "</td><td>" +
-                  data[0].id + "</td><td>" +
-                  location.href ="encomiendas/{{$encomiendas->id}}/editar" class="btn btn-warning btn-xs">Editar  + "</td></tr>"  
-
+                  data[0].id + "</td></tr>"
 
                   $("#tablabusqueda").append(nuevafila)
                }, //si sale bien se ejecuta
@@ -136,7 +135,7 @@
         });
       } else{
         $("#tabla").show(500);
-        $("#tablabusqueda").hide(500);
+        $("#tablabusqueda").empty();
       }
   }
  });
