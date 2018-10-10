@@ -36,6 +36,8 @@
                          <div  class="panel-body">
 
                            <input type="text" name="busqueda" id="busqueda" size="30" placeholder="Ingrese código de encomienda..">
+                           <button type="button"  onclick=buscar() class="btn btn-default btn-sm">Buscar</button>
+                           <button type="button"  onclick=limpiar() class="btn btn-default btn-sm">Limpiar</button>
 
                             <table class="table table-bordered">
 
@@ -102,9 +104,8 @@
 
 <script>
 
-  $("#busqueda").keydown(function (e) {
-  if(e.keyCode == 13) {
-      var valor = this.value;
+  function buscar (){
+      var valor = $("#busqueda").val();
       if (valor.length>0){
         $.ajax({  //asicrono x default
                url:"buscarencomienda", //obligatorio donde se mandan
@@ -124,7 +125,9 @@
                   data[0].nombre_cliente + "</td><td>" +
                   data[0].apellido_cliente + "</td><td>" +
                   data[0].dni_cliente + "</td><td>" +
-                  data[0].id + "</td></tr>"
+                  data[0].id + "</td><td>" +
+                  "<a href='encomiendas/" + data[0].id + "/editar' class='btn btn-warning btn-xs'>Editar</a> <br>" +
+                  "<a href='encomiendas/" + data[0].id + "/entregado' class='btn btn-danger btn-xs' >Entregado</a>" + "</td></tr>"
 
                   $("#tablabusqueda").append(nuevafila)
                }, //si sale bien se ejecuta
@@ -137,8 +140,13 @@
         $("#tabla").show(500);
         $("#tablabusqueda").empty();
       }
-  }
- });
+ };
+
+ function limpiar(){
+   $("#tabla").show(500);
+   $("#tablabusqueda").empty();
+   $("#busqueda").val("");
+ }
 
 
 

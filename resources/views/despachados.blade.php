@@ -36,6 +36,8 @@
                          <div class="panel-body">
 
                            <input type="text" name="busqueda" id="busqueda" size="30" placeholder="Ingrese código de encomienda..">
+                           <button type="button"  onclick=buscar() class="btn btn-default btn-sm">Buscar</button>
+                           <button type="button"  onclick=limpiar() class="btn btn-default btn-sm">Limpiar</button>
 
                             <table class="table table-bordered">
 
@@ -93,9 +95,8 @@
 
 <script>
 
-  $("#busqueda").keydown(function (e) {
-    if(e.keyCode == 13) {
-      var valor = this.value;
+  function buscar (){
+      var valor = $("#busqueda").val();
       if (valor.length>0){
         $.ajax({  //asicrono x default
               url:"buscarencomiendadespach", //obligatorio donde se mandan
@@ -103,8 +104,14 @@
               type:'POST',    //obligatorio por donde se manda
               datatype:'JSON', //obligatorio
               success: function(data){
+                if (JSON.stringify(data)=='{}') {
+                alert("no existe")
+                // var nuevafila= "<tr><td>" +
+                // "NO EXISTE" + "</td></tr>" +
+                // $("#tablabusqueda").append(nuevafila)
+              } else {
                 $("#tabla").hide(500);
-                $("#tablabusqueda").show(500);
+                $("#tablabusqueda").empty();
                 var nuevafila= "<tr><td>" +
                 data[0].nombre_clienter + "</td><td>" +
                 data[0].apellido_clienter + "</td><td>" +
@@ -117,20 +124,24 @@
                 data[0].dni_cliente + "</td><td>" +
                 data[0].id + "</td></tr>"
 
-                $("#tablabusqueda").append(nuevafila)
+                $("#tablabusqueda").append(nuevafila);
+               }
               }, //si sale bien se ejecuta
               error: function(){
                 alert("dsadsa")
               } //si hay error se ejecuta
-
         });
       } else{
          $("#tabla").show(500);
          $("#tablabusqueda").empty();
       }
-   }
-  });
+  };
 
+  function limpiar(){
+    $("#tabla").show(500);
+    $("#tablabusqueda").empty();
+    $("#busqueda").val("");
+  }
 
 
 
