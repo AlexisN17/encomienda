@@ -104,12 +104,11 @@
               type:'POST',    //obligatorio por donde se manda
               datatype:'JSON', //obligatorio
               success: function(data){
-                if (JSON.stringify(data)=='{}') {
-                alert("no existe")
-                // var nuevafila= "<tr><td>" +
-                // "NO EXISTE" + "</td></tr>" +
-                // $("#tablabusqueda").append(nuevafila)
-              } else {
+                if (data.length<1){
+                  $("#tablabusqueda").empty();
+                  $("#tablabusqueda").append("No existe encomienda con ese ID.")
+                  $("#tabla").hide(500);
+                } else{
                 $("#tabla").hide(500);
                 $("#tablabusqueda").empty();
                 var nuevafila= "<tr><td>" +

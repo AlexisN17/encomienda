@@ -113,6 +113,11 @@
                type:'POST',    //obligatorio por donde se manda
                datatype:'JSON', //obligatorio
                success: function(data){
+                  if (data.length<1){
+                    $("#tablabusqueda").empty();
+                    $("#tablabusqueda").append("No existe encomienda con ese ID.")
+                    $("#tabla").hide(500);
+                  } else{
                   $("#tabla").hide(500);
                   $("#tablabusqueda").empty();
                   var nuevafila= "<tr><td>" +
@@ -130,6 +135,7 @@
                   "<a href='encomiendas/" + data[0].id + "/entregado' class='btn btn-danger btn-xs' >Entregado</a>" + "</td></tr>"
 
                   $("#tablabusqueda").append(nuevafila)
+                }
                }, //si sale bien se ejecuta
                error: function(){
                  alert("dsadsa")
