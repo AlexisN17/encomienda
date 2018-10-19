@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth'], function ()
 
   Route::get('despachados', 'EncomiendaController@despachados');
 
+  Route::get ("reportes", function(){
+    return view ("reportes");
+  });
+
   Route::get ("editar", function(){
     return view ("editar");
   });
@@ -37,6 +41,8 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');
   Route::post('encomiendas/{id}/actualizar', 'EnvioController@update');
   Route::get('encomiendas/{id}/editar', 'EnvioController@edit');
+  Route::post('usersexcel', 'ExcelController@exportUsers');
+  Route::post('encomiendasexcel', 'ExcelController@exportEncomiendas');
 
 });
 
