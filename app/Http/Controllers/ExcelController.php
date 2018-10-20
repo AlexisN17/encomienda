@@ -17,7 +17,14 @@ class ExcelController extends Controller
 
         $excel->sheet('Users', function($sheet) use($users) { //sheet crea nueva hoja
 
-        $sheet->fromArray($users);
+        $sheet->row(1, [
+              'Nombre', 'Apellido', 'Email', 'DNI', 'Telefono', 'Direccion', 'Nombre de usuario'
+          ]);
+        foreach($users as $index => $user) {
+          $sheet->row($index+2, [
+            $user->nombre_personal, $user->apellido_personal, $user->email, $user->dni_personal, $user->telefono_personal, $user->direccion_personal, $user->username
+          ]);
+        }
 
         });
 
@@ -39,7 +46,16 @@ class ExcelController extends Controller
 
         $excel->sheet('Encomiendas', function($sheet) use($encomiendas) { //sheet crea nueva hoja
 
-        $sheet->fromArray($encomiendas);
+        $sheet->row(1, [
+                'ID','Nombre Remitente', 'Apellido', 'DNI', 'Destino', 'Descripcion', 'Pago', 'Nombre Destinatario', 'Apellido', 'DNI'
+            ]);
+        foreach($encomiendas as $index => $encomienda) {
+          $sheet->row($index+2, [
+              $encomienda->id, $encomienda->nombre_clienter, $encomienda->apellido_clienter, $encomienda->dni_clienter, $encomienda->destino_encomienda,
+              $encomienda->descripcion_encomienda, $encomienda->pago_encomienda, $encomienda->nombre_cliente, $encomienda->apellido_cliente, $encomienda->dni_cliente
+            ]);
+          }
+        // $sheet->fromArray($encomiendas);
 
         });
 
