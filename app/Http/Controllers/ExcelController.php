@@ -9,31 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class ExcelController extends Controller
 {
-    public function exportUsers()
+    public function exportEncomiendas(Request $request)
     {
-      \Excel::create('Users', function($excel) {
-
-        $users = User::all();
-
-        $excel->sheet('Users', function($sheet) use($users) { //sheet crea nueva hoja
-
-        $sheet->row(1, [
-              'Nombre', 'Apellido', 'Email', 'DNI', 'Telefono', 'Direccion', 'Nombre de usuario'
-          ]);
-        foreach($users as $index => $user) {
-          $sheet->row($index+2, [
-            $user->nombre_personal, $user->apellido_personal, $user->email, $user->dni_personal, $user->telefono_personal, $user->direccion_personal, $user->username
-          ]);
-        }
-
-        });
-
-      })->export('xlsx');
-      return view ('reportes');
-    }
-
-    public function exportEncomiendas()
-    {
+      dd($request);
       \Excel::create('Encomiendas', function($excel) {
 
         $encomiendas = DB::table('encomiendas')

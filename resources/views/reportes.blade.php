@@ -37,16 +37,15 @@
  </div>
 </nav>
 
-<form action="{{ URL('usersexcel') }}" method="POST">
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<H4>Exportar usuarios a excel</H4>
-<input type="submit" value="Exportar" class="btn btn-default btn-sm">
-</form>
-
 <form action="{{ URL('encomiendasexcel') }}" method="POST">
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <H4>Exportar encomiendas a excel</H4>
 <input type="submit" value="Exportar" class="btn btn-default btn-sm">
+<select id='localidades'>
+  @foreach ($localidades as $localidad)
+    <option name="localidad" value="{{$localidad->destino_encomienda}}">{{$localidad->destino_encomienda}}</option>
+  @endforeach
+</select>
 </form>
 
 </body>

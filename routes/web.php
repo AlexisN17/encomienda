@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Encomienda;
 Route::group(['middleware' => 'auth'], function ()
 {
   Route::get('/', function () {
@@ -25,7 +26,9 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('despachados', 'EncomiendaController@despachados');
 
   Route::get ("reportes", function(){
-    return view ("reportes");
+    $localidades=DB::table('encomiendas')->select('destino_encomienda')->groupBy('destino_encomienda')->get();
+    return View::make('reportes')->with('localidades', $localidades);
+
   });
 
   Route::get ("editar", function(){
@@ -41,7 +44,6 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');
   Route::post('encomiendas/{id}/actualizar', 'EnvioController@update');
   Route::get('encomiendas/{id}/editar', 'EnvioController@edit');
-  Route::post('usersexcel', 'ExcelController@exportUsers');
   Route::post('encomiendasexcel', 'ExcelController@exportEncomiendas');
 
 });
