@@ -11,6 +11,8 @@ class ExcelController extends Controller
 {
     public function exportEncomiendas(Request $request)
     {
+
+    if ($request->destino != null){
       \Excel::create('Encomiendas', function($excel) use($request) {
         $encomiendas = DB::table('encomiendas')
         ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
@@ -18,7 +20,7 @@ class ExcelController extends Controller
         ->select('encomiendas.*',
                  'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente',
                  'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
-        ->where('encomiendas.destino_encomienda','=',$request->localidades)
+        ->where('encomiendas.destino_encomienda','=',$request->destino)
         ->get();
 
 
@@ -33,11 +35,54 @@ class ExcelController extends Controller
               $encomienda->descripcion_encomienda, $encomienda->pago_encomienda, $encomienda->nombre_cliente, $encomienda->apellido_cliente, $encomienda->dni_cliente
             ]);
           }
-        // $sheet->fromArray($encomiendas);
 
         });
 
       })->export('xlsx');
       return view ('reportes');
+
+    }else {
+    \Excel::create('Encomiendas', function($excel) use($request) {
+      $buscar = DB::table('clientesdestinatarios')
+      ->where('clientesdestinatarios.nombre_cliente','=', $request->destinatario)
+      ->join('encomiendas','encomiendas.id_clientedestinatario','=','clientesdestinatarios.id')
+      ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+      ->get();
+
+
+      $excel->sheet('Encomiendas', function($sheet) use($buscar) { //sheet crea nueva hoja
+
+      $sheet->row(1, [
+              'ID','Nombre Remitente', 'Apellido', 'DNI', 'Destino', 'Descripcion', 'Pago', 'Nombre Destinatario', 'Apellido', 'DNI'
+          ]);
+      foreach($buscar as $index => $busca) {
+        $sheet->row($index+2, [
+            $busca->id, $busca->nombre_clienter, $busca->apellido_clienter, $busca->dni_clienter, $busca->destino_encomienda,
+            $busca->descripcion_encomienda, $busca->pago_encomienda, $busca->nombre_cliente, $busca->apellido_cliente, $busca->dni_cliente
+          ]);
+        }
+
+      });
+
+    })->export('xlsx');
+    return view ('reportes');
+
+      }
+    }
+
+
+
+
+    public function filtrarPor(Request $request){
+
+      if ($request->filtrar == 'destino'){
+        $destino = DB::table('encomiendas')->select('destino_encomienda')->groupBy('destino_encomienda')->get();
+        return \View::make('filtro')->with('destinos', $destino);
+      }
+      if ($request->filtrar == 'destinatario'){
+        return view('filtro');
+      }
+
+
     }
 }

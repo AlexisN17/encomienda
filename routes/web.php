@@ -21,15 +21,16 @@ Route::group(['middleware' => 'auth'], function ()
       return view('inicio');
   });
 
+
   Route::get('entrega', 'EncomiendaController@index');
 
   Route::get('despachados', 'EncomiendaController@despachados');
 
   Route::get ("reportes", function(){
-    $localidades=DB::table('encomiendas')->select('destino_encomienda')->groupBy('destino_encomienda')->get();
-    return View::make('reportes')->with('localidades', $localidades);
-
+    return view ('reportes');
   });
+
+  Route::post('encomiendasexcel', 'ExcelController@filtrarPor');
 
   Route::get ("editar", function(){
     return view ("editar");
@@ -44,7 +45,7 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('encomiendas/{id}/entregado', 'EncomiendaController@entregado');
   Route::post('encomiendas/{id}/actualizar', 'EnvioController@update');
   Route::get('encomiendas/{id}/editar', 'EnvioController@edit');
-  Route::post('encomiendasexcel', 'ExcelController@exportEncomiendas');
+  Route::post('excel', 'ExcelController@exportEncomiendas');
 
 });
 

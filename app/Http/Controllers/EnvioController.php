@@ -148,19 +148,16 @@ class EnvioController extends Controller
          return view('inicio', compact('errores'));
          }
          if ($success) {
-           $emaildestino = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('email_cliente') ->first();
-           $nombredest = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('nombre_cliente') ->first();
-           $apellidodest = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('apellido_cliente') ->first();
-           $nombrerem = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('nombre_clienter') ->first();
-           $apellidorem = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('apellido_clienter') ->first();
+           $destin = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('email_cliente','nombre_cliente','apellido_cliente') ->first();
+           $remit = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('nombre_clienter','apellido_clienter') ->first();
            $objDemo = new \stdClass();
            $objDemo->datos = $encomienda -> id;
-           $objDemo->datos2 = $nombrerem-> nombre_clienter;
-           $objDemo->datos3 = $apellidorem-> apellido_clienter;
+           $objDemo->datos2 = $remit-> nombre_clienter;
+           $objDemo->datos3 = $remit-> apellido_clienter;
            $objDemo->sender = 'Integral Pack Express';
-           $objDemo->receiver = $nombredest -> nombre_cliente;
-           $objDemo->receiver2 = $apellidodest -> apellido_cliente;
-           Mail::to('alexis.nemer17@hotmail.com')->send(new CodigoEncReceived($objDemo));
+           $objDemo->receiver = $destin -> nombre_cliente;
+           $objDemo->receiver2 = $destin -> apellido_cliente;
+           Mail::to($destin->email_cliente)->send(new CodigoEncReceived($objDemo));
            return redirect('inicio');
          }
 

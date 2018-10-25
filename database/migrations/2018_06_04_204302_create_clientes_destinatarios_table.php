@@ -21,6 +21,7 @@ class CreateClientesDestinatariosTable extends Migration
             $table->bigInteger('telefono_cliente');
             $table->string('email_cliente')->nullable();
             $table->string('direccion_cliente');
+            $table->timestamps();
     });
    }
 

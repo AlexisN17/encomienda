@@ -173,6 +173,7 @@
                     $('#nombre').val(data[0]['nombre_clienter']);
                     $('#apellido').val(data[0]['apellido_clienter']);
                     $('#telefono').val(data[0]['telefono_clienter']);
+                    $('#email').val(data[0]['email_clienter']);
                     $('#direccion').val(data[0]['direccion_clienter']);
 
                    }, //si sale bien se ejecuta
@@ -199,6 +200,7 @@
                    $('#nombre2').val(data[0]['nombre_cliente']);
                    $('#apellido2').val(data[0]['apellido_cliente']);
                    $('#telefono2').val(data[0]['telefono_cliente']);
+                   $('#email2').val(data[0]['email_cliente']);
                    $('#direccion2').val(data[0]['direccion_cliente']);
 
                   }, //si sale bien se ejecuta

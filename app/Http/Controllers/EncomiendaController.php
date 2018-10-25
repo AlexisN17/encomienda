@@ -17,7 +17,6 @@ class EncomiendaController extends Controller
      */
     public function index()
     {
-
           $encomienda = DB::table('encomiendas')
           ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
           ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
@@ -27,8 +26,6 @@ class EncomiendaController extends Controller
           ->where('estado_encomienda','=',false)
           ->paginate(10);
           return view('entrega',compact('encomienda'));
-
-
 
      }
 

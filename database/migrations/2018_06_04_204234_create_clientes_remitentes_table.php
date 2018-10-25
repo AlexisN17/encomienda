@@ -21,6 +21,7 @@ class CreateClientesRemitentesTable extends Migration
             $table->bigInteger('dni_clienter')->unique();
             $table->bigInteger('telefono_clienter');
             $table->string('direccion_clienter');
+            $table->timestamps();
 
         });
     }
