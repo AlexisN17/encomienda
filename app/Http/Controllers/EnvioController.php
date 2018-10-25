@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\ClienteDestinatario;
 use App\ClienteRemitente;
 use App\Encomienda;
-use App\Personal;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 use DB;
 use App\Quotation;
+use App\Mail\CodigoEncReceived;
+use Illuminate\Support\Facades\Mail;
 
 
 class EnvioController extends Controller
@@ -117,7 +118,7 @@ class EnvioController extends Controller
            $destino -> apellido_cliente = $request -> apellido2;
            $destino -> dni_cliente = $request -> dni2;
            $destino -> telefono_cliente = $request -> telefono2;
-           $origen -> email_cliente = $request -> email2;
+           $destino -> email_cliente = $request -> email2;
            $destino -> direccion_cliente = $request -> direccion2;
            $destino -> save();
            $dest = $destino -> id;
@@ -147,9 +148,21 @@ class EnvioController extends Controller
          return view('inicio', compact('errores'));
          }
          if ($success) {
+           $emaildestino = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('email_cliente') ->first();
+           $nombredest = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('nombre_cliente') ->first();
+           $apellidodest = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('apellido_cliente') ->first();
+           $nombrerem = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('nombre_clienter') ->first();
+           $apellidorem = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('apellido_clienter') ->first();
+           $objDemo = new \stdClass();
+           $objDemo->datos = $encomienda -> id;
+           $objDemo->datos2 = $nombrerem-> nombre_clienter;
+           $objDemo->datos3 = $apellidorem-> apellido_clienter;
+           $objDemo->sender = 'Integral Pack Express';
+           $objDemo->receiver = $nombredest -> nombre_cliente;
+           $objDemo->receiver2 = $apellidodest -> apellido_cliente;
+           Mail::to('alexis.nemer17@hotmail.com')->send(new CodigoEncReceived($objDemo));
            return redirect('inicio');
          }
-                    return redirect('inicio');
 
     }
 
@@ -161,6 +174,7 @@ class EnvioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         //
@@ -178,8 +192,8 @@ class EnvioController extends Controller
       ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
       ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
       ->select('encomiendas.*',
-               'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente','clientesdestinatarios.telefono_cliente','clientesdestinatarios.direccion_cliente',
-               'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter','clientesremitentes.telefono_clienter','clientesremitentes.direccion_clienter')
+               'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente','clientesdestinatarios.telefono_cliente','clientesdestinatarios.email_cliente','clientesdestinatarios.direccion_cliente',
+               'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter','clientesremitentes.telefono_clienter','clientesremitentes.email_clienter','clientesremitentes.direccion_clienter')
       ->where('estado_encomienda','=',false)
       ->where('encomiendas.id','=',$id)
       ->get();

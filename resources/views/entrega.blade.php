@@ -20,7 +20,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li ><a href="{{url('/inicio')}}">Envios</a></li>
-      <li class="active"><a>Entrega</a></li>
+      <li class="active"><a>Entregas</a></li>
       <li><a href="{{url('/despachados')}}">Despachados</a></li>
       <li ><a href="{{url('/reportes')}}">Reportes</a></li>
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión

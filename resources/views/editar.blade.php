@@ -22,7 +22,7 @@
    </div>
    <ul class="nav navbar-nav">
      <li><a href="{{url('/inicio')}}">Envios</a></li>
-     <li><a href="{{url('/entrega')}}">Entrega</a></li>
+     <li><a href="{{url('/entrega')}}">Entregas</a></li>
      <li><a href="{{url('/despechados')}}">Despachados</a></li>
      <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
        </a>
@@ -81,6 +81,10 @@
    {{Form::text('telefono', $encomienda[0]->telefono_clienter)}}
    <br>
    <br>
+   <H4>{{Form::label('email', 'Email:')}}</H4>
+   {{Form::text('email', $encomienda[0]->email_clienter)}}
+   <br>
+   <br>
    <H4>{{Form::label('direccion', 'Dirección:')}}</H4>
    {{Form::text('direccion', $encomienda[0]->direccion_clienter)}}
    </div>
@@ -125,6 +129,10 @@
    <br>
    <H4>{{Form::label('telefono2', 'Telefono:')}}</H4>
    {{Form::text('telefono2', $encomienda[0]->telefono_cliente)}}
+   <br>
+   <br>
+   <H4>{{Form::label('email2', 'Email:')}}</H4>
+   {{Form::text('email2', $encomienda[0]->email_cliente)}}
    <br>
    <br>
    <H4>{{Form::label('direccion2', 'Dirección:')}}</H4>

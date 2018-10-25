@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\ClienteDestinatario;
 
 class CodigoEncReceived extends Mailable
 {
@@ -18,9 +17,9 @@ class CodigoEncReceived extends Mailable
      *
      * @return void
      */
-    public function __construct(ClienteDestinatario $codencomienda)
+    public function __construct($codencomienda)
     {
-        $this->ClienteDestinatario = $codencomienda;
+        $this->codencomienda = $codencomienda;
     }
 
     /**
@@ -30,6 +29,12 @@ class CodigoEncReceived extends Mailable
      */
     public function build()
     {
-        return $this->view('mail');
+      return $this->from('encomiendassedes@gmail.com','Integral Pack Express')
+                  ->subject('Su codigo de encomienda.')
+                  ->view('mail')
+                  ->attach(public_path('css').'/logo_integral.jpg', [
+                    'as' => 'logo_integral.jpg',
+                    'mime' => 'image/jpeg',
+                  ]);
     }
 }

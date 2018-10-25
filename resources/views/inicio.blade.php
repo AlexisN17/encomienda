@@ -22,7 +22,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Envios</a></li>
-      <li><a href="{{url('/entrega')}}">Entrega</a></li>
+      <li><a href="{{url('/entrega')}}">Entregas</a></li>
       <li><a href="{{url('/despachados')}}">Despachados</a></li>
       <li ><a href="{{url('/reportes')}}">Reportes</a></li>
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Cerrar Sesión
@@ -79,6 +79,7 @@
     <br>
     <H4>{{Form::label('telefono', 'Telefono:')}}</H4>
     {{Form::text('telefono')}}
+    <br>
     <br>
     <H4>{{Form::label('email', 'Email:')}}</H4>
     {{Form::text('email')}}
