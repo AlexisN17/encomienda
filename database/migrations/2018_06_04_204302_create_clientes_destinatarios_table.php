@@ -19,6 +19,7 @@ class CreateClientesDestinatariosTable extends Migration
             $table->string('apellido_cliente');
             $table->bigInteger('dni_cliente')->unique();
             $table->bigInteger('telefono_cliente');
+            $table->string('email_cliente')->nullable();
             $table->string('direccion_cliente');
     });
    }

@@ -41,7 +41,7 @@
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <H4>Exportar encomiendas a excel</H4>
 <input type="submit" value="Exportar" class="btn btn-default btn-sm">
-<select id='localidades'>
+<select id='localidades' name="localidades">
   @foreach ($localidades as $localidad)
     <option name="localidad" value="{{$localidad->destino_encomienda}}">{{$localidad->destino_encomienda}}</option>
   @endforeach

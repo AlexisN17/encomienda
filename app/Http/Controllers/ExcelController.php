@@ -11,16 +11,16 @@ class ExcelController extends Controller
 {
     public function exportEncomiendas(Request $request)
     {
-      dd($request);
-      \Excel::create('Encomiendas', function($excel) {
-
+      \Excel::create('Encomiendas', function($excel) use($request) {
         $encomiendas = DB::table('encomiendas')
         ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
         ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
         ->select('encomiendas.*',
                  'clientesdestinatarios.nombre_cliente','clientesdestinatarios.apellido_cliente','clientesdestinatarios.dni_cliente',
                  'clientesremitentes.nombre_clienter','clientesremitentes.apellido_clienter','clientesremitentes.dni_clienter')
+        ->where('encomiendas.destino_encomienda','=',$request->localidades)
         ->get();
+
 
         $excel->sheet('Encomiendas', function($sheet) use($encomiendas) { //sheet crea nueva hoja
 

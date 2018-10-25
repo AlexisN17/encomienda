@@ -51,6 +51,7 @@
 @if (!empty($errores))
     <div class="alert alert-danger">
         <ul>
+          {{$errores}}
                 <li>{{ 'Hubo un error al intentar guardar los datos',$errores }}</li>
     </div>
 @endif
@@ -78,6 +79,9 @@
     <br>
     <H4>{{Form::label('telefono', 'Telefono:')}}</H4>
     {{Form::text('telefono')}}
+    <br>
+    <H4>{{Form::label('email', 'Email:')}}</H4>
+    {{Form::text('email')}}
     <br>
     <br>
     <H4>{{Form::label('direccion', 'Dirección:')}}</H4>
@@ -124,6 +128,10 @@
     <br>
     <H4>{{Form::label('telefono2', 'Telefono:')}}</H4>
     {{Form::text('telefono2')}}
+    <br>
+    <br>
+    <H4>{{Form::label('email2', 'Email:')}}</H4>
+    {{Form::text('email2')}}
     <br>
     <br>
     <H4>{{Form::label('direccion2', 'Dirección:')}}</H4>

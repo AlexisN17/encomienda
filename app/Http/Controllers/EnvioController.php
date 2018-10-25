@@ -44,13 +44,13 @@ class EnvioController extends Controller
 
     public function store(Request $request)
     {
-
-      $this->validate($request,[
+    $formInput =  $this->validate($request,[
 
              'nombre' => 'required|max:255',
              'apellido'  => 'required|max:255',
              'dni' => 'required|max:255',
              'telefono' => 'required|max:255',
+             'email' => 'required|max:255',
              'direccion' => 'required|max:255',
 
              'peso' => 'required|max:255',
@@ -63,12 +63,14 @@ class EnvioController extends Controller
              'apellido2' => 'required|max:255',
              'dni2' => 'required|max:255',
              'telefono2' => 'required|max:255',
+             'email2' => 'required|max:255',
              'direccion2' => 'required|max:255',
          ],[
              'nombre.required' => 'El campo nombre remitente es obligatorio',
              'apellido.required' => 'El campo apellido remitente es obligatorio',
              'dni.required' => 'El campo DNI remitente es obligatorio',
              'telefono.required' => 'El campo telefono remitente es obligatorio',
+             'email.required' => 'El campo email remitente es obligatorio',
              'direccion.required' => 'El campo direccion remitente es obligatorio',
 
              'peso.required' => 'El campo peso es obligatorio',
@@ -81,6 +83,7 @@ class EnvioController extends Controller
              'apellido2.required' => 'El campo apellido destinatario es obligatorio',
              'dni2.required' => 'El campo DNI destinatario es obligatorio',
              'telefono2.required' => 'El campo telefono destinatario es obligatorio',
+             'email2.required' => 'El campo email remitente es obligatorio',
              'direccion2.required' => 'El campo direccion destinatario es obligatorio',
 
           ]);
@@ -97,6 +100,7 @@ class EnvioController extends Controller
            $origen -> apellido_clienter = $request -> apellido;
            $origen -> dni_clienter = $request -> dni;
            $origen -> telefono_clienter = $request -> telefono;
+           $origen -> email_clienter = $request -> email;
            $origen -> direccion_clienter = $request -> direccion;
            $origen -> save();
            $rem = $origen -> id;
@@ -113,6 +117,7 @@ class EnvioController extends Controller
            $destino -> apellido_cliente = $request -> apellido2;
            $destino -> dni_cliente = $request -> dni2;
            $destino -> telefono_cliente = $request -> telefono2;
+           $origen -> email_cliente = $request -> email2;
            $destino -> direccion_cliente = $request -> direccion2;
            $destino -> save();
            $dest = $destino -> id;
@@ -201,6 +206,7 @@ class EnvioController extends Controller
         $origen -> apellido_clienter = $request -> apellido;
         $origen -> dni_clienter = $request -> dni;
         $origen -> telefono_clienter = $request -> telefono;
+        $origen -> email_clienter = $request -> email;
         $origen -> direccion_clienter = $request -> direccion;
         $origen -> save();
 
@@ -212,6 +218,7 @@ class EnvioController extends Controller
         $destino -> apellido_cliente = $request -> apellido2;
         $destino -> dni_cliente = $request -> dni2;
         $destino -> telefono_cliente = $request -> telefono2;
+        $origen -> email_clienter = $request -> email2;
         $destino -> direccion_cliente = $request -> direccion2;
         $destino -> save();
 
