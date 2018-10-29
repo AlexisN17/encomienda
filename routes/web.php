@@ -27,10 +27,12 @@ Route::group(['middleware' => 'auth'], function ()
   Route::get('despachados', 'EncomiendaController@despachados');
 
   Route::get ("reportes", function(){
-    return view ('reportes');
+    $localidades=DB::table('encomiendas')->select('destino_encomienda')->groupBy('destino_encomienda')->get();
+    return View::make('reportes')->with('localidades', $localidades);
+
   });
 
-  Route::post('encomiendasexcel', 'ExcelController@filtrarPor');
+  Route::post('encomiendasexcel', 'ExcelController@filtradoexport');
 
   Route::get ("editar", function(){
     return view ("editar");

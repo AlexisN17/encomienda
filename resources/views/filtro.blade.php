@@ -17,8 +17,11 @@
         @endforeach
      </select>
   @else
-    <input type="text" name="destinatario" value="">
+    <input type="text" id="destinatario" name="destinatario" value="">
   @endif
+
+  <input type="date"></input>
+
 
  <input type="submit" name="" value="Exportar">
 </form>

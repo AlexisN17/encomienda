@@ -41,7 +41,8 @@ class ExcelController extends Controller
       })->export('xlsx');
       return view ('reportes');
 
-    }else {
+    };
+    if ($request->destinatario != null){
     \Excel::create('Encomiendas', function($excel) use($request) {
       $buscar = DB::table('clientesdestinatarios')
       ->where('clientesdestinatarios.nombre_cliente','=', $request->destinatario)
@@ -67,22 +68,27 @@ class ExcelController extends Controller
     })->export('xlsx');
     return view ('reportes');
 
-      }
+      };
     }
 
+    public function filtradoexport(Request $request){
 
-
-
-    public function filtrarPor(Request $request){
-
-      if ($request->filtrar == 'destino'){
-        $destino = DB::table('encomiendas')->select('destino_encomienda')->groupBy('destino_encomienda')->get();
-        return \View::make('filtro')->with('destinos', $destino);
-      }
-      if ($request->filtrar == 'destinatario'){
-        return view('filtro');
+      if(isset($request->localidades)){
+        $destino = $request->localidades;
+      }else{
+        $destino = '0';
       }
 
 
-    }
+      \Excel::create('Encomiendas', function($excel) use($destino) {
+        $encomiendas = DB::table('encomiendas')
+        ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+        ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
+        ->where(('encomiendas.destino_encomienda','=', $destino)->orWhere ($destino, '=','0'))
+        ->get();
+        dd($encomiendas);
+
+    });
+
+  }
 }
