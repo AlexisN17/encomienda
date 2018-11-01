@@ -11,7 +11,6 @@ class ExcelController extends Controller
 {
     public function exportEncomiendas(Request $request)
     {
-
     if ($request->destino != null){
       \Excel::create('Encomiendas', function($excel) use($request) {
         $encomiendas = DB::table('encomiendas')
@@ -72,23 +71,22 @@ class ExcelController extends Controller
     }
 
     public function filtradoexport(Request $request){
+      if((is_null( $request->localidades)) and (is_null( $request->fechadesde)) and (is_null( $request->fechahasta))) {
+         return('no ingresaste nada');
+      } else{
+            \Excel::create('Encomiendas', function($excel) use($request) {
+              $encomiendas = DB::table('encomiendas')
+              ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
+              ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario');
+              if(isset($request->localidades)){
+                  $encomiendas->where('encomiendas.destino_encomienda','=', $request->localidades)
+              }
+             else{
+                dd($request->localidades)
+            }
 
-      if(isset($request->localidades)){
-        $destino = $request->localidades;
-      }else{
-        $destino = '0';
-      }
-
-
-      \Excel::create('Encomiendas', function($excel) use($destino) {
-        $encomiendas = DB::table('encomiendas')
-        ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
-        ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
-        ->where(('encomiendas.destino_encomienda','=', $destino)->orWhere ($destino, '=','0'))
-        ->get();
-        dd($encomiendas);
 
     });
-
+    }
   }
 }

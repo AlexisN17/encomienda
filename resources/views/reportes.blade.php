@@ -41,12 +41,19 @@
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <H4>Exportar encomiendas a excel</H4>
 <input type="submit" value="Exportar" class="btn btn-default btn-sm">
+<br><br>
 
+   <label>Localidad</label><br>
    <select class="" name="localidades">
+     <option value="">Seleccione una opción</option>
      @foreach ($localidades as $localidad)
         <option name="localidad" value="{{$localidad->destino_encomienda}}">{{$localidad->destino_encomienda}}</option>
      @endforeach
    </select>
+   <br><br>
+   <label>Rango de fecha</label><br>
+   <label for="">Desde</label>  <input name="fechadesde" type="date"><br><br>
+   <label>Hasta</label>  <input name="fechahasta" type="date">
 
 
 </form>
