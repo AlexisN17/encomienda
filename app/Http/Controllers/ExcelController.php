@@ -71,19 +71,32 @@ class ExcelController extends Controller
     }
 
     public function filtradoexport(Request $request){
-      if((is_null( $request->localidades)) and (is_null( $request->fechadesde)) and (is_null( $request->fechahasta))) {
+      if((is_null( $request->localidades)) and (is_null($request->nombre)) and (is_null($request->apellido)) and (is_null( $request->fechadesde)) and (is_null( $request->fechahasta))) {
          return('no ingresaste nada');
       } else{
-            \Excel::create('Encomiendas', function($excel) use($request) {
+          \Excel::create('Encomiendas', function($excel) use($request) {
+              $localidad = $request->localidades;
+              $fechadesde = $request->fechadesde;
+              $fechahasta = $request->fechahasta;
+              $nombre = $request->nombre;
+              $apellido = $request->apellido;
               $encomiendas = DB::table('encomiendas')
               ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
-              ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario');
-              if(isset($request->localidades)){
-                  $encomiendas->where('encomiendas.destino_encomienda','=', $request->localidades)
-              }
-             else{
-                dd($request->localidades)
-            }
+              ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
+              ->when($localidad, function($query) use($localidad){
+                return $query->where('encomiendas.destino_encomienda',$localidad);
+             })
+             ->when($nombre, function($query) use($nombre){
+              return $query->where('clientesdestinatarios.nombre_cliente',$nombre);
+             })
+            ->when($apellido, function($query) use($apellido){
+             return $query->where('clientesdestinatarios.apellido_cliente',$apellido);
+            })
+            ->when($fechadesde, function($query) use($fechadesde,$fechahasta){
+              return $query->whereBetween('encomiendas.updated_at', [$fechadesde,$fechahasta]);
+            })
+             ->get();
+         dd($encomiendas);
 
 
     });

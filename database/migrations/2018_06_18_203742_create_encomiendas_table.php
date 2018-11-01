@@ -24,7 +24,8 @@ class CreateEncomiendasTable extends Migration
             $table->string('descripcion_encomienda');
             $table->string('pago_encomienda');
             $table->boolean('estado_encomienda')->default(false);
-            $table->timestamps();
+            $table->date('created_at')->format('Y-m-d');
+            $table->date('updated_at')->format('Y-m-d');
 
             $table->foreign('id_personal')->references('id')->on('users');
             $table->foreign('id_clientedestinatario')->references('id')->on('ClientesDestinatarios');

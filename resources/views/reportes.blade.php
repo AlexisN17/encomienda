@@ -42,7 +42,7 @@
 <H4>Exportar encomiendas a excel</H4>
 <input type="submit" value="Exportar" class="btn btn-default btn-sm">
 <br><br>
-
+    <h3>Filtros</h3>
    <label>Localidad</label><br>
    <select class="" name="localidades">
      <option value="">Seleccione una opción</option>
@@ -53,7 +53,10 @@
    <br><br>
    <label>Rango de fecha</label><br>
    <label for="">Desde</label>  <input name="fechadesde" type="date"><br><br>
-   <label>Hasta</label>  <input name="fechahasta" type="date">
+   <label>Hasta</label>  <input name="fechahasta" type="date"> <br><br>
+   <label>Nombre Destinatario</label> <input type="text" name="nombre" > <br> <br>
+   <label>Apellido Destinatario</label> <input type="text" name="apellido">
+
 
 
 </form>
