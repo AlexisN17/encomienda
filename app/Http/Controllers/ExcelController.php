@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Encomienda;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class ExcelController extends Controller
 {
@@ -80,6 +81,9 @@ class ExcelController extends Controller
               $fechahasta = $request->fechahasta;
               $nombre = $request->nombre;
               $apellido = $request->apellido;
+              $fecha = new DateTime();
+              $fechaorigen = new DateTime('1998-03-06');
+
               $encomiendas = DB::table('encomiendas')
               ->join('clientesremitentes','clientesremitentes.id','=','encomiendas.id_clienteremitente')
               ->join('clientesdestinatarios','clientesdestinatarios.id','=','encomiendas.id_clientedestinatario')
@@ -92,11 +96,22 @@ class ExcelController extends Controller
             ->when($apellido, function($query) use($apellido){
              return $query->where('clientesdestinatarios.apellido_cliente',$apellido);
             })
-            ->when($fechadesde, function($query) use($fechadesde,$fechahasta){
-              return $query->whereBetween('encomiendas.updated_at', [$fechadesde,$fechahasta]);
+            ->when($fechadesde, function($query) use($fechadesde,$fechahasta,$fecha){
+                 if($fechahasta == null){
+                     return $query->whereBetween('encomiendas.updated_at',[$fechadesde, $fecha]);
+                 }
+                  if($fechadesde != null and  $fechahasta != null){
+                    return $query->whereBetween('encomiendas.updated_at',[$fechadesde, $fechahasta]);
+                 }
+               })
+            ->when($fechahasta, function($query) use($fechahasta,$fechadesde,$fechaorigen){
+                if($fechadesde == null){
+                  return $query->whereBetween('encomiendas.updated_at',[$fechaorigen, $fechahasta]);
+              }
             })
-             ->get();
-         dd($encomiendas);
+            ->get();
+       
+
 
 
     });

@@ -14,7 +14,6 @@
 </head>
 <body >
 
-
 <nav class="navbar navbar-default">
  <div class="container-fluid">
    <div class="navbar-header">
@@ -53,9 +52,11 @@
    <br><br>
    <label>Rango de fecha</label><br>
    <label for="">Desde</label>  <input name="fechadesde" type="date"><br><br>
-   <label>Hasta</label>  <input name="fechahasta" type="date"> <br><br>
+   <label>Hasta</label>  <input name="fechahasta" type="date" max="<?php localtime();?>"> <br><br>
    <label>Nombre Destinatario</label> <input type="text" name="nombre" > <br> <br>
    <label>Apellido Destinatario</label> <input type="text" name="apellido">
+
+
 
 
 
