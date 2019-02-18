@@ -178,7 +178,7 @@
 
                    }, //si sale bien se ejecuta
                    error: function(){
-                     alert("dsadsa")
+                     alert("No existen remitentes con este DNI.")
                    } //si hay error se ejecuta
 
             });
@@ -205,7 +205,7 @@
 
                   }, //si sale bien se ejecuta
                   error: function(){
-                    alert("dsadsa")
+                    alert("No existen destinatarios con este DNI.")
                   } //si hay error se ejecuta
 
            });

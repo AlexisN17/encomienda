@@ -36,9 +36,10 @@
  </div>
 </nav>
 
+
 <form action="{{ URL('encomiendasexcel') }}" method="POST">
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<H4>Exportar encomiendas a excel</H4>
+<H3>Exportar encomiendas a excel</H3>
 <input type="submit" value="Exportar" class="btn btn-default btn-sm">
 <br><br>
     <h3>Filtros</h3>
@@ -51,10 +52,11 @@
    </select>
    <br><br>
    <label>Rango de fecha</label><br>
-   <label for="">Desde</label>  <input name="fechadesde" type="date"><br><br>
-   <label>Hasta</label>  <input name="fechahasta" type="date" max="<?php localtime();?>"> <br><br>
+   <label>Desde</label>  <input name="fechadesde" type="date" max="<?php echo date("Y-m-d");?>" min="2018-10-07"><br><br>
+   <label>Hasta</label>  <input name="fechahasta" type="date" max="<?php echo date("Y-m-d");?>" min="2018-10-07"> <br><br>
    <label>Nombre Destinatario</label> <input type="text" name="nombre" > <br> <br>
    <label>Apellido Destinatario</label> <input type="text" name="apellido">
+
 
 
 

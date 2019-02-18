@@ -229,7 +229,7 @@ class EnvioController extends Controller
         $destino -> apellido_cliente = $request -> apellido2;
         $destino -> dni_cliente = $request -> dni2;
         $destino -> telefono_cliente = $request -> telefono2;
-        $origen -> email_clienter = $request -> email2;
+        $destino -> email_cliente = $request -> email2;
         $destino -> direccion_cliente = $request -> direccion2;
         $destino -> save();
 
@@ -254,7 +254,17 @@ class EnvioController extends Controller
         return view('inicio', compact('errores'));
         }
         if ($success) {
-          return redirect()->action('EncomiendaController@index');
+          $destin = ClienteDestinatario::where('id','=',$encomienda-> id_clientedestinatario )  ->select('email_cliente','nombre_cliente','apellido_cliente') ->first();
+          $remit = ClienteRemitente::where('id','=',$encomienda-> id_clienteremitente )  ->select('nombre_clienter','apellido_clienter') ->first();
+          $objDemo = new \stdClass();
+          $objDemo->datos = $encomienda -> id;
+          $objDemo->datos2 = $remit-> nombre_clienter;
+          $objDemo->datos3 = $remit-> apellido_clienter;
+          $objDemo->sender = 'Integral Pack Express';
+          $objDemo->receiver = $destin -> nombre_cliente;
+          $objDemo->receiver2 = $destin -> apellido_cliente;
+          Mail::to($destin->email_cliente)->send(new CodigoEncReceived($objDemo));
+          return redirect('inicio');
         }
     }
 
